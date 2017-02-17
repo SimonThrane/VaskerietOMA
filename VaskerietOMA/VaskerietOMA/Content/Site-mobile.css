@@ -1,0 +1,124 @@
+﻿#nav .mobile_toggle {
+	display:none;	
+}
+
+@media screen and (max-width: 1200px){
+	
+	.feature { max-width:1080px; margin-left:auto; margin-right:auto; padding:0; }
+	.feature .callout { top:-100px; left:20px; }
+
+}
+
+@media screen and (max-width: 1024px){
+	
+}
+
+@media screen and (max-width: 768px){
+  .modal:before {
+    display: inline-block;
+    vertical-align: middle;
+    content: " ";
+    height: 100%;
+  }
+  
+  #outer { padding:20px; }
+	
+	#nav { height:auto; position:relative; top:auto; left:auto; text-align:center; padding-top:20px; }
+	#nav .mobile_toggle { font-size:14px; text-decoration:none; display:inline-block; }
+	.nav ul { display:none; padding:30px 0; }
+	.nav li { display:block; text-align:center; margin:16px 0; float: none !important; width: 100% !important; }
+	.nav li a { line-height:1; }
+	
+	#footer { padding:40px; }
+	#footer .inner .table { display:block; padding:20px 0; }
+	#footer .inner .cell { width:100%; display:block; padding:20px 0; }
+	#footer .dotted { padding:0; }
+	#footer .dotted:before, 
+	#footer .dotted:after { display:none; }
+
+    .rid {
+        width: 100%;
+        float: none;
+    }
+
+    .cols .col.two_thirds,
+	.cols .col.one_third, 
+	.cols .col.one_half { width:100%; float:none; }
+	
+	.centertext img { display:block; margin:0 auto; }
+	
+	.feature { margin-bottom:100px; }
+	.feature .callout { width:auto; height:auto; top:auto; left:auto; position:relative; }
+	.feature .callout .table { width:auto; height:auto; margin:40px auto 0; background:none; }
+	.feature .callout .table .cell { padding:0; }
+	.now_serving { margin: 0 auto 70px; }
+	.now_serving.hidden { display:none; }
+	.slideshow { margin:100px auto; }
+	.menus { margin:0 auto 60px; }
+	.menus .cell { display:block; margin:12px auto; }
+	.menus img,
+	.menus br { display:none; }
+	.hours { margin-bottom:50px; }
+	.hours .floatleft .tableWrap {  margin:50px auto 0; }
+	.hours .floatleft { text-align:center; }
+	.hours .floatright img { margin:50px auto; }
+	.restaurant { margin-bottom:50px; }
+	.restaurant .floatright h2 { margin-top:60px; }
+	.reservations .floatleft { text-align:center; margin-bottom:50px; }
+	.reservations .floatleft img { margin-top:0; }
+	.reservations .floatright .tableWrap { display:block; margin:0 auto 50px; }
+	.reservations .floatright img { display:block; margin:0 auto; }
+	.newsletter .dots { padding:0; background:none; }
+	.newsletter .dots:before, 
+	.newsletter .dots:after,
+	.newsletter .dots .inner:after { display:none; }
+	.newsletter .dots .inner { padding:0; }
+	
+	.people .person { width:100%; margin:0 auto 50px; padding:0; float:none;  max-width:300px; }
+	
+	.menus_nav  { margin-bottom:70px; }
+	
+	.contact { margin:50px auto 0; }
+	.contact .dots { padding:0; background:none; }
+	.contact .dots:before, 
+	.contact .dots:after,
+	.contact .dots .inner:after { display:none; }
+	.contact .dots .inner { padding:40px 0 0; }
+	
+	#events_grid { margin:0; }
+	#events_grid .grid { height:auto!important; }
+	#events_grid .grid-sizer,
+	#events_grid .grid-item { width:100%; float:none!important; position:relative!important; top:auto!important; left:auto!important; }
+	#events_grid .grid-item .item-inner { padding:0 10px; }
+	.event_mobile_thumb { display:block; margin-bottom:50px; }
+	.table.event .cell.thumb { display:none; }
+	
+}
+
+@media screen and (max-width: 480px){
+	
+	p.quote { width:100%; font-size:28px!important; line-height:38px!important; }
+	
+	#footer { padding:20px; }
+	
+	.slideshow { padding:0; }
+	.slideshow .tableWrap { width:100%; height:auto; position:relative; top:auto; right:auto; }
+	.slideshow .pager { width:100%; text-align:center; margin-top:20px; }
+	.slideshow .pager span { display:inline-block; margin:0 7px; }
+	.menus .dots { padding:0; background:none; }
+	.menus .dots .inner { padding:0; }
+	.menus .dots:before, 
+	.menus .dots:after,
+	.menus .dots .inner:after { display:none; }
+	.hours .floatleft .table,
+	.reservations .floatright .table { width:auto; height:auto; margin:50px auto; background:none; }
+	.reservations .floatright .table { padding:50px 0; }
+	
+	.people .row .person.first,
+	.people .row .person.middle,
+	.people .row .person.last { margin-top:0!important; }
+	.people_popup a.close { top:20px; right:40px; }
+	
+	.menus_nav .table { width:auto; height:auto; margin:0 auto; background:none; }
+	
+}

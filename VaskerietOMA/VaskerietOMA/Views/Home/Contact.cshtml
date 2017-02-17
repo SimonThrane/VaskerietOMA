@@ -1,0 +1,58 @@
+﻿@{
+    ViewBag.Title = "Fejlmeld Maskine";
+}
+<h2>@ViewBag.Title</h2>
+
+<link href="~/Content/Contact.css" rel="stylesheet" type="text/css" />
+
+
+<div class=" container col-lg-5 col-md-5 col-sm-12 col-xs-12">
+    <div style="padding: 10px" class="input-frame">
+        @using (Html.BeginForm("Contact", "Home"))
+        {
+
+            @Html.AntiForgeryToken()
+            <fieldset>
+                <legend>Fejlmeddelse</legend>
+                <label>
+                    Maskine:
+                </label>
+                <input name="Machine" type="text" size="30" maxlength="100">
+
+                <br>
+                <label>
+                    Navn:
+                </label>
+                <input name="Name" type="text" size="30" maxlength="100" placeholder="Dit navn">
+                <br>
+                <label>Besked:</label>
+                <textarea name="Text" rows="4" cols="50" placeholder="Din besked"></textarea>
+
+                <input id="submit-button" type="submit" value="Send meddelelse">
+
+            </fieldset>
+        }
+    </div>
+</div>
+<div class=" container col-lg-5 col-md-5 col-sm-12 col-xs-12">
+    <div style="padding: 10px" class="input-frame">
+        @using (Html.BeginForm("ContactIdea", "Home"))
+        {
+            @Html.AntiForgeryToken()
+            <fieldset>
+                <legend>Forslag til forbedring</legend>
+                <label>
+                    Navn:
+                </label>
+                <input name="Name" type="text" size="30" maxlength="100" placeholder="Dit navn">
+                <br>
+                <label>Besked:</label>
+                <textarea name="Text" rows="4" cols="50" placeholder="Forbedringsforslag"></textarea>
+
+                <input id="submit-button" type="submit" value="Send meddelelse">
+
+            </fieldset>
+        }
+    </div>
+</div>
+

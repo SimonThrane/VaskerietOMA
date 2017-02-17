@@ -1,0 +1,28 @@
+﻿body {
+}
+
+#photo-viewer{
+    position: relative;
+    height: 300px;
+    overflow:hidden;
+}
+
+
+#photo-viewer .is-loading::after{
+    content: url(Img/ajax-loader.gif);
+    position: absolute;
+    top:0;
+    right:0;
+}
+
+#photo-viewer img{
+    position: absolute;
+    max-width: 100%;
+    max-height:100%;
+    top:50%;
+    left:50%;
+}
+
+a.active{
+    opacity:0.3;
+}

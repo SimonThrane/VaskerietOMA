@@ -1,0 +1,124 @@
+﻿@model MyModel.WashTime.WashTime
+
+<link href="~/Content/Booking.css" rel="stylesheet" type="text/css" />
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        @Html.HiddenFor(model => model.ID)
+        <div id="ID" style="display: none;" data-value="@Model.ID"></div>
+
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            <label>
+                Tidspunkt: @Model.Time
+            </label>
+        </div>
+
+        <div class="form-group">
+            <label>
+                Maskine: @Model.Machine
+            </label>
+        </div>
+        <div class=".center">
+            @if (Model.IsBooked)
+                {
+                <label>
+                    Værelsesnummer: @Model.RoomNumber
+                </label>
+                    <div id="feedback"></div>
+            }
+            else
+            {
+                <label id>
+                    Værelsesnummer:
+                    <div id="RoomNumberLabel"></div>
+                </label>
+                    <input id="RoomNumber" name="RoomNumber" type="number" maxlength="10" placeholder="Dit værelsesnr.">
+                    <div id="feedback"></div>
+            }
+            @if (!Model.IsBooked)
+                {
+                <input id="Input" type="button" value="Book maskinen" class="btn btn-default submit" />
+            }
+            else
+            {
+                <input id="CancelBooking" type="button" value="Afmeld din booking af maskinen" class="btn btn-default submit"/>
+            }
+
+        </div>
+        <script>
+            function checkRoomNumber() {
+                var elMsg = document.getElementById('feedback');
+                if ($('#RoomNumber').val() < 1 || $('#RoomNumber').val() > 100) {
+                    $("#Input").prop('disabled', true);
+                    elMsg.textContent = "Værelsesnr. er ikke gyldigt";
+                } else {
+                    elMsg.textContent = '';
+                    $("#Input").prop('disabled', false);
+                }
+            }
+
+            $('#RoomNumber').keyup(function(e) {
+                checkRoomNumber();
+            });
+
+            $(document).ready(function() {
+                if ($('#RoomNumber').val() > 1 || $('#RoomNumber').val() < 100) {
+                    $("#Input").prop('disabled', false);
+                } else {
+                    $("#Input").prop('disabled', true);
+                }
+
+            });
+
+            $(document).on('click', '#CancelBooking', function() {
+                if (window.confirm("Er du sikker på, at du vil afbooke tiden?")) {
+                    jQuery.ajax({
+                        url: '@Url.Action("CancelBooking", "Home")',
+                        method: "POST",
+                        cache: false,
+                        data: {ID: $('#ID').data().value}
+                    }).done(function(d) {
+                        $('#feedback').empty();
+                        $('#feedback').append(d);
+                        $('#Input').show();
+                        $('#RoomNumber').show();
+                        $('#RoomNumberLabel').empty();
+
+                    });
+                } 
+            });
+
+            $(document).on('click', '#Input', function () {
+
+                var roomNumber = $('#RoomNumber').val().toString();
+
+                jQuery.ajax({
+                    url: '@Url.Action("Booking", "Home")',
+                    method: "POST",
+                    cache: false,
+                    data: { RoomNumber: roomNumber }
+                }).done(function (d) {
+                    $('#feedback').empty();
+                    $('#feedback').append(d);
+                    $('#Input').hide();
+                    $('#RoomNumber').hide();
+                    $('#RoomNumberLabel').empty();
+                    $('#RoomNumberLabel').append(roomNumber);
+                });
+            });
+        </script>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Tilbage til oversigten", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

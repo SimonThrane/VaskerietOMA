@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VaskerietOMA", "VaskerietOMA\VaskerietOMA.csproj", "{F082C3FB-F142-46A1-B1E7-D92C6E6C86D5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Model", "Model\Model.csproj", "{D164A3C5-F408-4251-9D6B-26221D695808}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F082C3FB-F142-46A1-B1E7-D92C6E6C86D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F082C3FB-F142-46A1-B1E7-D92C6E6C86D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F082C3FB-F142-46A1-B1E7-D92C6E6C86D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F082C3FB-F142-46A1-B1E7-D92C6E6C86D5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D164A3C5-F408-4251-9D6B-26221D695808}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D164A3C5-F408-4251-9D6B-26221D695808}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D164A3C5-F408-4251-9D6B-26221D695808}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D164A3C5-F408-4251-9D6B-26221D695808}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

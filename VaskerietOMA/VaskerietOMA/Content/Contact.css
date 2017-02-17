@@ -1,0 +1,64 @@
+﻿body {
+}
+
+
+
+    .input-frame{
+        font-family: sans-serif;
+        border:solid;
+        border-color:blue;
+        border-radius: 25px;        
+    }
+
+    .fieldset{
+        padding:5px;
+    }
+
+
+    label{
+    display: inline-block;
+    float: left;
+    clear: left;
+    width: 25%;
+    text-align: left;
+        padding:5px; 
+
+}
+input {
+    display: inline-block;
+    float: left;
+}
+  
+textarea{
+    padding:5px;
+    float:left;
+    border:2px solid #ccc; 
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+}
+
+textarea:focus {
+    border-color:#333;
+}
+
+
+input[type=submit] {
+    padding:5px 15px; 
+    background:#ccc; 
+    border:0 none;
+    cursor:pointer;
+    -webkit-border-radius: 5px;
+    border-radius: 5px; 
+    clear:left;
+}
+
+input[type=text] {
+    padding:5px; 
+    border:2px solid #ccc; 
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+}
+
+input[type=text]:focus {
+    border-color:#333;
+}

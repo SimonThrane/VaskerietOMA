@@ -1,0 +1,131 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Vaskeriet på OMA</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <link rel="stylesheet" href="~/Content/Site-mobile.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/manifest.json">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+</head>
+<body>
+<div id="outer">
+    <div class="container">
+        <div id="nav" class="neutra_bold">
+            <a href="#" class="mobile_toggle"><i class="fa fa-bars"></i> Menu</a>
+            <ul id="menu-main-menu" class="nav" style="display: block;">
+                <li><a id="homeLink" href="/Home/Index">Ugeplanen</a> </li>
+                <li><a id="aboutLink" href="/Home/About">Konceptet</a> </li>
+                <li ><a id="dayLink" href="/Home/Day">Dage</a> </li>
+                <li ><a id="contactLink" href="/Home/Contact">Kontakt</a> </li>
+            </ul>
+        </div>
+    </div>
+    <div id="logo">
+        <img src="/Content/img/logo.png" alt="">
+    </div>
+
+    <div class="container body-content" id="content">
+        @RenderBody()
+
+        <hr/>
+    </div>
+    <div id="footer">
+        <div class="wrapper">
+            <div class="inner">
+                <div class="table">
+                    <div class="cell">
+                        <h3>Addresse</h3>
+                        <p>
+                            Dalgas Avenue 10<br>
+                            Aarhus C, 8000
+                        </p>
+                    </div>
+                    <div class="cell">
+                        <div class="dotted">
+                            <h3>Følg os på</h3>
+                            <a href="" target="_blank" class="social"><i class="fa fa-instagram"></i></a>
+                            <a href="" target="_blank" class="social"><i class="fa fa-facebook"></i></a>
+                            <a href="" target="_blank" class="social"><i class="fa fa-twitter"></i></a>
+                            <p>&copy; @DateTime.Now.Year - Simon Thrane Hansen</p>
+
+                        </div>
+                    </div>
+                    <div class="cell">
+                        <h3>Kontakt os på</h3>
+                        <a href="mailto:administrator@vaskerietoma.dk">administrator@vaskerietoma.dk</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+
+    <script src="~/Scripts/AjaxScript.js"></script>
+
+    @RenderSection("scripts", required: false)
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $.each($('#menu-main-menu').find('li'), function () {
+                $(this).find('a').toggleClass('active',
+                    window.location.pathname.indexOf($(this).find('a').attr('href')) > -1);
+            });
+
+        });
+
+      
+
+        jQuery(function($) {
+
+            resizeWindow();
+
+            $(window).resize(resizeWindow);
+
+            $('#nav .mobile_toggle').click(function(e) {
+                e.preventDefault();
+                $('#nav ul').slideToggle();
+            });
+        });
+	
+
+
+        function resizeWindow() {
+
+            var ww = $(window).width();
+
+            if (ww > 768) {
+                $('#nav ul').css('display', 'table');
+            } else {
+                $('#nav ul').css('display', 'none');
+            }
+
+        }
+
+
+       
+    </script>
+</body>
+</html>
