@@ -1,256 +1,617 @@
-﻿@model List<MyModel.WashTime.WashTime>
+﻿@using Newtonsoft.Json.Converters
+@model VaskerietOMA.ViewModel.TimeTableViewModel
 
 @{
-    ViewBag.Title = "Home Page";
+    ViewBag.Title = "Book en tid";
 }
 
-<link rel="stylesheet" href="~/Content/Calender.css">
 
-<div>
-<h3 class="pull-left">Uge nr: @ViewBag.Weeknumber</h3>
+<script src="/Scripts/AngularController/weekctrl.js"></script>
+
+<div ng-app="myApp">
+<div ng-controller="WeekController as ctrl" ng-init="init(@Newtonsoft.Json.JsonConvert.SerializeObject(Model))" ng-cloak>
+<h3 class="pull-left">Uge nr: {{ctrl.Weeknumber}}</h3>
 <h1>Kalender</h1>
-
-@*<div id="loader"></div>*@
-@*<div class="animate-bottom" id="myDiv">*@
-<table id="tabel" class="col-md-12">
-<div class="head_nav">
-    <tr>
-        <th >Time</th>
-        <th colspan="2">Monday</th>
-        <th colspan="2">Tuesday</th>
-        <th colspan="2">Wednesday</th>
-        <th colspan="2">Thursday</th>
-        <th colspan="2">Friday</th>
-        <th colspan="2">Saturday</th>
-        <th colspan="2">Sunday</th>
-    </tr>
-</div>
-    <tr>
-        <th></th>
-        <td>Venstre</td>
-        <td>Højre</td>
-        <td>Venstre</td>
-        <td>Højre</td>
-        <td>Venstre</td>
-        <td>Højre</td>
-        <td>Venstre</td>
-        <td>Højre</td>
-        <td>Venstre</td>
-        <td>Højre</td>
-        <td>Venstre</td>
-        <td>Højre</td>
-        <td>Venstre</td>
-        <td>Højre</td>
-
-    </tr>
-@for (int i = 6; i < 24; i++)
-{
-   
-    <tr id="@i.ToString()">
-    <th>@i.ToString():00 - @(1 + i):00</th>
-       
-        <td class="rid @(Model[(0) + (2*(i - 6))].IsBooked ? "booked" : "not-booked")">
-
-            <div id="ID" style="display: none;" data-value="@Model[(0) + (2*(i - 6))].ID"></div>
-
-            @Model[(0) + (2 * (i - 6))].Time.ToShortTimeString()
-            <br />
-            @Model[(0) + (2 * (i - 6))].RoomNumber
-
-        </td>
-        <td class="rid @(Model[(1) + (2*(i - 6))].IsBooked ? "booked" : "not-booked")">
-
-            <div id="ID" style="display: none;" data-value="@Model[(1) + (2*(i - 6))].ID"></div>
-
-            @Model[(1) + (2 * (i - 6))].Time.ToShortTimeString()
-            <br />
-            @Model[(1) + (2 * (i - 6))].RoomNumber
-
-        </td>  
-        <td class="rid @(Model[(36) + (2*(i - 6))].IsBooked ? "booked" : "not-booked")">
-
-            <div id="ID" style="display: none;" data-value="@Model[(36) + (2*(i - 6))].ID"></div>
-
-            @Model[(36) + (2 * (i - 6))].Time.ToShortTimeString()
-            <br />
-            @Model[(36) + (2 * (i - 6))].RoomNumber
-        </td>
-        <td class="rid @(Model[(37) + (2*(i - 6))].IsBooked ? "booked" : "not-booked")">
-
-            <div id="ID" style="display: none;" data-value="@Model[(37) + (2*(i - 6))].ID"></div>
-
-            @Model[(37) + (2 * (i - 6))].Time.ToShortTimeString()
-            <br />
-            @Model[(37) + (2 * (i - 6))].RoomNumber
-        </td>
-        <td class="rid @(Model[(72) + (2*(i - 6))].IsBooked ? "booked" : "not-booked")">
-
-            <div id="ID" style="display: none;" data-value="@Model[(72) + (2*(i - 6))].ID"></div>
-
-            @Model[(72) + (2 * (i - 6))].Time.ToShortTimeString()
-            <br />
-            @Model[(72) + (2 * (i - 6))].RoomNumber
-        </td>
-        <td class="rid @(Model[(73) + (2*(i - 6))].IsBooked ? "booked" : "not-booked")">
-
-            <div id="ID" style="display: none;" data-value="@Model[(73) + (2*(i - 6))].ID"></div>
-
-            @Model[(73) + (2 * (i - 6))].Time.ToShortTimeString()
-            <br />
-            @Model[(73) + (2 * (i - 6))].RoomNumber
-        </td>
-        <td class="rid @(Model[(108) + (2*(i - 6))].IsBooked ? "booked" : "not-booked")">
-
-            <div id="ID" style="display: none;" data-value="@Model[(108) + (2*(i - 6))].ID"></div>
-
-            @Model[(108) + (2 * (i - 6))].Time.ToShortTimeString()
-            <br />
-            @Model[(108) + (2 * (i - 6))].RoomNumber
-        </td>
-        <td class="rid @(Model[(109) + (2*(i - 6))].IsBooked ? "booked" : "not-booked")">
-
-            <div id="ID" style="display: none;" data-value="@Model[(109) + (2*(i - 6))].ID"></div>
-
-            @Model[(109) + (2 * (i - 6))].Time.ToShortTimeString()
-            <br />
-            @Model[(109) + (2 * (i - 6))].RoomNumber
-        </td>
-        <td class="rid @(Model[(144) + (2*(i - 6))].IsBooked ? "booked" : "not-booked"))">
-
-            <div id="ID" style="display: none;" data-value="@Model[(144) + (2*(i - 6))].ID"></div>
-
-            @Model[(144) + (2 * (i - 6))].Time.ToShortTimeString()
-            <br />
-            @Model[(144) + (2 * (i - 6))].RoomNumber
-        </td>
-        <td class="rid @(Model[(145) + (2*(i - 6))].IsBooked ? "booked" : "not-booked")">
-
-            <div id="ID" style="display: none;" data-value="@Model[(145) + (2*(i - 6))].ID"></div>
-
-            @Model[(145) + (2 * (i - 6))].Time.ToShortTimeString()
-            <br />
-            @Model[(145) + (2 * (i - 6))].RoomNumber
-        </td>
-        <td class="rid @(Model[(180) + (2*(i - 6))].IsBooked ? "booked" : "not-booked")">
-
-            <div id="ID" style="display: none;" data-value="@Model[(180) + (2*(i - 6))].ID"></div>
-
-            @Model[(180) + (2 * (i - 6))].Time.ToShortTimeString()
-            <br />
-            @Model[(180) + (2 * (i - 6))].RoomNumber
-
-        </td>
-        <td class="rid @(Model[(181) + (2*(i - 6))].IsBooked ? "booked" : "not-booked")">
-
-            <div id="ID" style="display: none;" data-value="@Model[(181) + (2*(i - 6))].ID"></div>
-
-            @Model[(181) + (2 * (i - 6))].Time.ToShortTimeString()
-            <br />
-            @Model[(181) + (2 * (i - 6))].RoomNumber
-        </td>
-        <td class="rid @(Model[(216) + (2*(i - 6))].IsBooked ? "booked" : "not-booked")">
-
-            <div id="ID" style="display: none;" data-value="@Model[(216) + (2*(i - 6))].ID"></div>
-
-            @Model[(216) + (2 * (i - 6))].Time.ToShortTimeString()
-            <br />
-            @Model[(216) + (2 * (i - 6))].RoomNumber
-        </td>
-                <td class="rid @(Model[(217) + (2*(i - 6))].IsBooked ? "booked" : "not-booked")">
-
-                    <div id="ID" style="display: none;" data-value="@Model[(217) + (2*(i - 6))].ID"></div>
-
-                    @Model[(217) + (2 * (i - 6))].Time.ToShortTimeString()
-                    <br/>
-                    @Model[(217) + (2 * (i - 6))].RoomNumber
-
-
-                    @*@if (Model[(217) + (2*(i - 6))].IsBooked == true)
-                        {
-                            <div class="booked">
-                                @Model[(217) + (2*(i - 6))].RoomNumber
-                            </div>
-                        }
-                        else
-                        {
-                            <div class="not-booked">
-                                @Model[(217) + (2*(i - 6))].Time.ToShortTimeString()
-                            </div>
-                        }*@
+<table id="weektabel" class="col-md-12 col-lg-12 weektimeTable">
+<tr class="head_nav">
+    <th>Time <span class="	glyphicon glyphicon-time"></span></th>
+    <th colspan="2">Monday</th>
+    <th colspan="2">Tuesday</th>
+    <th colspan="2">Wednesday</th>
+    <th colspan="2">Thursday</th>
+    <th colspan="2">Friday</th>
+    <th colspan="2">Saturday</th>
+    <th colspan="2">Sunday</th>
+</tr>
+<tr>
+    <th></th>
+    <td>Venstre</td>
+    <td>Højre</td>
+    <td>Venstre</td>
+    <td>Højre</td>
+    <td>Venstre</td>
+    <td>Højre</td>
+    <td>Venstre</td>
+    <td>Højre</td>
+    <td>Venstre</td>
+    <td>Højre</td>
+    <td>Venstre</td>
+    <td>Højre</td>
+    <td>Venstre</td>
+    <td>Højre</td>
+</tr>
+<tr>
+    <td>
+        <table>
+            <tr ng-repeat="times in ctrl.TimeTable.Monday.Left">
+                <td class="time" colspan="2">
+                    {{times.TimeString}}
+                                
                 </td>
-        </tr>
-}
+            </tr>
+        </table>
+    </td>
+    <td>
+        <table>
+            <tr ng-repeat="times in ctrl.TimeTable.Monday.Left">
+                <td ng-click="ctrl.bookTime(times)" class="washtime" ng-class="{booked: times.IsBooked}">
+                    {{times.TimeString}}
+                    <br />
+                    <span ng-if="times.IsBooked">
+                                    {{times.RoomNumber}}
+                                </span>
+                </td>
+            </tr>
+        </table>
+    </td>
+    <td>
+        <table>
+
+            <tr ng-repeat="times in ctrl.TimeTable.Monday.Right">
+                <td ng-click="ctrl.bookTime(times)" class="washtime" ng-class="{booked: times.IsBooked}">
+                    {{times.TimeString}}
+                    <br />
+                    <span ng-if="times.IsBooked">
+                                    {{times.RoomNumber}}
+                                </span>
+                </td>
+            </tr>
+        </table>
+    </td>
+    <td>
+        <table>
+            <tr ng-repeat="times in ctrl.TimeTable.Tuesday.Left">
+                <td ng-click="ctrl.bookTime(times)" class="washtime" ng-class="{booked: times.IsBooked}">
+                    {{times.TimeString}}
+                    <br />
+
+                    <span ng-if="times.IsBooked">
+                                    {{times.RoomNumber}}
+                                </span>
+                </td>
+            </tr>
+        </table>
+    </td>
+    <td>
+        <table>
+
+            <tr ng-repeat="times in ctrl.TimeTable.Tuesday.Right">
+                <td ng-click="ctrl.bookTime(times)" class="washtime" ng-class="{booked: times.IsBooked}">
+                    {{times.TimeString}}
+                    <br />
+                    <span ng-if="times.IsBooked">
+                                    {{times.RoomNumber}}
+                                </span>
+                </td>
+            </tr>
+        </table>
+    </td>
+    <td>
+        <table>
+            <tr ng-repeat="times in ctrl.TimeTable.Wednesday.Left">
+                <td ng-click="ctrl.bookTime(times)" class="washtime" ng-class="{booked: times.IsBooked}">
+                    {{times.TimeString}}
+                    <br />
+                    <span ng-if="times.IsBooked">
+                                    {{times.RoomNumber}}
+                                </span>
+                </td>
+            </tr>
+        </table>
+    </td>
+    <td>
+        <table>
+            <tr ng-repeat="times in ctrl.TimeTable.Wednesday.Right">
+                <td ng-click="ctrl.bookTime(times)" class="washtime" ng-class="{booked: times.IsBooked}">
+                    {{times.TimeString}}
+                    <br />
+                    <span ng-if="times.IsBooked">
+                                    {{times.RoomNumber}}
+                                </span>
+                </td>
+            </tr>
+        </table>
+    </td>
+    <td>
+        <table>
+            <tr ng-repeat="times in ctrl.TimeTable.Thursday.Left">
+                <td ng-click="ctrl.bookTime(times)" class="washtime" ng-class="{booked: times.IsBooked}">
+                    {{times.TimeString}}
+                    <br />
+                    <span ng-if="times.IsBooked">
+                                    {{times.RoomNumber}}
+                                </span>
+                </td>
+            </tr>
+        </table>
+    </td>
+    <td>
+        <table>
+
+            <tr ng-repeat="times in ctrl.TimeTable.Thursday.Right">
+                <td ng-click="ctrl.bookTime(times)" class="washtime" ng-class="{booked: times.IsBooked}">
+                    {{times.TimeString}}
+                    <br />
+                    <span ng-if="times.IsBooked">
+                                    {{times.RoomNumber}}
+                                </span>
+                </td>
+            </tr>
+        </table>
+    </td>
+    <td>
+        <table>
+            <tr ng-repeat="times in ctrl.TimeTable.Friday.Left">
+                <td ng-click="ctrl.bookTime(times)" class="washtime" ng-class="{booked: times.IsBooked}">
+                    {{times.TimeString}}
+                    <br />
+                    <span ng-if="times.IsBooked">
+                                    {{times.RoomNumber}}
+                                </span>
+                </td>
+            </tr>
+        </table>
+    </td>
+    <td>
+        <table>
+
+            <tr ng-repeat="times in ctrl.TimeTable.Friday.Right">
+                <td ng-click="ctrl.bookTime(times)" class="washtime" ng-class="{booked: times.IsBooked}">
+                    {{times.TimeString}}
+                    <br />
+                    <span ng-if="times.IsBooked">
+                                    {{times.RoomNumber}}
+                                </span>
+                </td>
+            </tr>
+        </table>
+    </td>
+    <td>
+        <table>
+            <tr ng-repeat="times in ctrl.TimeTable.Saturday.Left">
+                <td ng-click="ctrl.bookTime(times)" class="washtime" ng-class="{booked: times.IsBooked}">
+                    {{times.TimeString}}
+                    <br />
+                    <span ng-if="times.IsBooked">
+                                    {{times.RoomNumber}}
+                                </span>
+                </td>
+            </tr>
+        </table>
+    </td>
+    <td>
+        <table>
+
+            <tr ng-repeat="times in ctrl.TimeTable.Saturday.Right">
+                <td ng-click="ctrl.bookTime(times)" class="washtime" ng-class="{booked: times.IsBooked}">
+                    {{times.TimeString}}
+                    <br />
+                    <span ng-if="times.IsBooked">
+                                    {{times.RoomNumber}}
+                                </span>
+                </td>
+            </tr>
+        </table>
+    </td>
+    <td>
+        <table>
+            <tr ng-repeat="times in ctrl.TimeTable.Sunday.Left">
+                <td ng-click="ctrl.bookTime(times)" class="washtime" ng-class="{booked: times.IsBooked}">
+                    {{times.TimeString}}
+                    <br />
+                    <span ng-if="times.IsBooked">
+                                    {{times.RoomNumber}}
+                                </span>
+                </td>
+            </tr>
+        </table>
+    </td>
+    <td>
+        <table>
+            <tr ng-repeat="times in ctrl.TimeTable.Sunday.Right">
+                <td ng-click="ctrl.bookTime(times)" class="washtime" ng-class="{booked: times.IsBooked}">
+                    {{times.TimeString}}
+                    <br />
+                    <span ng-if="times.IsBooked">
+                                    {{times.RoomNumber}}
+                                </span>
+                </td>
+            </tr>
+        </table>
+    </td>
+</tr>
+
 </table>
 
-    <!-- Modal -->
-    <div id="myModal" class="modal fade" role="dialog" data-url='@Url.Action("Booking")'>
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Book en vasketid</h4>
-                </div>
-                <div id="ModalBody" class="modal-body">
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="close" data-dismiss="modal">Close</button>
-                </div>
-            </div>
+<div ng-cloak="" class="DayTabs">
+<md-content>
+<md-tabs md-dynamic-height="" md-border-bottom="">
+<md-tab label="Monday">
+    <md-content class="md-padding">
+        <h1 class="md-display-2">Monday</h1>
+        <table class="daytable">
+            <tr>
+                <th colspan="2">
+                    Monday
+                </th>
+            </tr>
 
-        </div>
-    </div>
+            <tr>
+                <td>
+                    <table>
+                        <tr ng-repeat="times in ctrl.TimeTable.Monday.Left">
+                            <td ng-click="ctrl.bookTime(times)" class="washtime" ng-class="{booked: times.IsBooked}">
+                                {{times.TimeString}}
+                                <br />
+                                {{times.Machine}}
+                                <br />
+                                <span ng-if="times.IsBooked">
+                                                        {{times.RoomNumber}}
+                                                    </span>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+                <td>
+                    <table>
+                        <tr ng-repeat="times in ctrl.TimeTable.Monday.Right">
+                            <td ng-click="ctrl.bookTime(times)" class="washtime" ng-class="{booked: times.IsBooked}">
+                                {{times.TimeString}}
+                                <br />
+                                {{times.Machine}}
+                                <br />
+                                <span ng-if="times.IsBooked">
+                                                        {{times.RoomNumber}}
+                                                    </span>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+    </md-content>
+</md-tab>
+<md-tab label="Tuesday">
+    <md-content class="md-padding">
+        <h1 class="md-display-2">Tuesday</h1>
+        <table class="daytable">
+            <tr>
+                <th colspan="2">
+                    Tuesday
+                </th>
+            </tr>
+
+            <tr>
+                <td>
+                    <table>
+                        <tr ng-repeat="times in ctrl.TimeTable.Tuesday.Left">
+                            <td ng-click="ctrl.bookTime(times)" class="washtime" ng-class="{booked: times.IsBooked}">
+                                {{times.TimeString}}
+                                <br />
+                                {{times.Machine}}
+                                <br />
+                                <span ng-if="times.IsBooked">
+                                                        {{times.RoomNumber}}
+                                                    </span>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+                <td>
+                    <table>
+                        <tr ng-repeat="times in ctrl.TimeTable.Tuesday.Right">
+                            <td ng-click="ctrl.bookTime(times)" class="washtime" ng-class="{booked: times.IsBooked}">
+                                {{times.TimeString}}
+                                <br />
+                                {{times.Machine}}
+                                <br />
+                                <span ng-if="times.IsBooked">
+                                                        {{times.RoomNumber}}
+                                                    </span>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+    </md-content>
+</md-tab>
+<md-tab label="Wednesday">
+    <md-content class="md-padding">
+        <h1 class="md-display-2">Wednesday</h1>
+        <table class="daytable">
+            <tr>
+                <th colspan="2">
+                    Wednesday
+                </th>
+            </tr>
+
+            <tr>
+                <td>
+                    <table>
+                        <tr ng-repeat="times in ctrl.TimeTable.Wednesday.Left">
+                            <td ng-click="ctrl.bookTime(times)" class="washtime" ng-class="{booked: times.IsBooked}">
+                                {{times.TimeString}}
+                                <br />
+                                {{times.Machine}}
+                                <br />
+                                <span ng-if="times.IsBooked">
+                                                        {{times.RoomNumber}}
+                                                    </span>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+                <td>
+                    <table>
+                        <tr ng-repeat="times in ctrl.TimeTable.Wednesday.Right">
+                            <td ng-click="ctrl.bookTime(times)" class="washtime" ng-class="{booked: times.IsBooked}">
+                                {{times.TimeString}}
+                                <br />
+                                {{times.Machine}}
+                                <br />
+                                <span ng-if="times.IsBooked">
+                                                        {{times.RoomNumber}}
+                                                    </span>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+    </md-content>
+</md-tab>
+<md-tab label="Thursday">
+    <md-content class="md-padding">
+        <h1 class="md-display-2">Thursday</h1>
+        <table class="daytable">
+            <tr>
+                <th colspan="2">
+                    Thursday
+                </th>
+            </tr>
+
+            <tr>
+                <td>
+                    <table>
+                        <tr ng-repeat="times in ctrl.TimeTable.Thursday.Left">
+                            <td ng-click="ctrl.bookTime(times)" class="washtime" ng-class="{booked: times.IsBooked}">
+                                {{times.TimeString}}
+                                <br />
+                                {{times.Machine}}
+                                <br />
+                                <span ng-if="times.IsBooked">
+                                                        {{times.RoomNumber}}
+                                                    </span>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+                <td>
+                    <table>
+                        <tr ng-repeat="times in ctrl.TimeTable.Thursday.Right">
+                            <td ng-click="ctrl.bookTime(times)" class="washtime" ng-class="{booked: times.IsBooked}">
+                                {{times.TimeString}}
+                                <br />
+                                {{times.Machine}}
+                                <br />
+                                <span ng-if="times.IsBooked">
+                                                        {{times.RoomNumber}}
+                                                    </span>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+    </md-content>
+</md-tab>
+<md-tab label="Friday">
+    <md-content class="md-padding">
+        <h1 class="md-display-2">Friday</h1>
+        <table class="daytable">
+            <tr>
+                <th colspan="2">
+                    Friday
+                </th>
+            </tr>
+
+            <tr>
+                <td>
+                    <table>
+                        <tr ng-repeat="times in ctrl.TimeTable.Friday.Left">
+                            <td ng-click="ctrl.bookTime(times)" class="washtime" ng-class="{booked: times.IsBooked}">
+                                {{times.TimeString}}
+                                <br />
+                                {{times.Machine}}
+                                <br/>
+                                <span ng-if="times.IsBooked">
+                                                        {{times.RoomNumber}}
+                                                    </span>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+                <td>
+                    <table>
+                        <tr ng-repeat="times in ctrl.TimeTable.Friday.Right">
+                            <td ng-click="ctrl.bookTime(times)" class="washtime" ng-class="{booked: times.IsBooked}">
+                                {{times.TimeString}}
+                                <br />
+                                {{times.Machine}}
+                                <br />
+                                <span ng-if="times.IsBooked">
+                                                        {{times.RoomNumber}}
+                                                    </span>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+
+    </md-content>
+</md-tab>
+<md-tab label="Saturday">
+    <md-content class="md-padding">
+        <h1 class="md-display-2">Saturday</h1>
+        <table class="daytable">
+            <tr>
+                <th colspan="2">
+                    Saturday
+                </th>
+            </tr>
+
+            <tr>
+                <td>
+                    <table>
+                        <tr ng-repeat="times in ctrl.TimeTable.Saturday.Left">
+                            <td ng-click="ctrl.bookTime(times)" class="washtime" ng-class="{booked: times.IsBooked}">
+                                {{times.TimeString}}
+                                <br />
+                                {{times.Machine}}
+                                <br />
+                                <span ng-if="times.IsBooked">
+                                                        {{times.RoomNumber}}
+                                                    </span>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+                <td>
+                    <table>
+                        <tr ng-repeat="times in ctrl.TimeTable.Saturday.Right">
+                            <td ng-click="ctrl.bookTime(times)" class="washtime" ng-class="{booked: times.IsBooked}">
+                                {{times.TimeString}}
+                                <br />
+                                {{times.Machine}}
+                                <br />
+                                <span ng-if="times.IsBooked">
+                                                        {{times.RoomNumber}}
+                                                    </span>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+
+    </md-content>
+</md-tab>
+<md-tab label="Sunday">
+    <md-content class="md-padding">
+        <h1 class="md-display-2">Sunday</h1>
+        <table class="daytable">
+            <tr>
+                <th colspan="2">
+                    Sunday
+                </th>
+            </tr>
+
+            <tr>
+                <td>
+                    <table>
+                        <tr ng-repeat="times in ctrl.TimeTable.Sunday.Left">
+                            <td ng-click="ctrl.bookTime(times)" class="washtime" ng-class="{booked: times.IsBooked}">
+                                {{times.TimeString}}
+                                <br />
+                                {{times.Machine}}
+                                <br />
+                                <span ng-if="times.IsBooked">
+                                    {{times.RoomNumber}}
+                                </span>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+                <td>
+                    <table>
+                        <tr ng-repeat="times in ctrl.TimeTable.Sunday.Right">
+                            <td ng-click="ctrl.bookTime(times)" class="washtime" ng-class="{booked: times.IsBooked}">
+                                {{times.TimeString}}
+                                <br />
+                                {{times.Machine}}
+                                <br />
+                                <span ng-if="times.IsBooked">
+                                    {{times.RoomNumber}}
+                                </span>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+    </md-content>
+</md-tab>
+</md-tabs>
+</md-content>
 </div>
 
 
+<!-- Modal -->
+<script type="text/ng-template" id="Bookng.html">
+    <form name="myForm">
 
-<script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
+        <div class="modal-header">
+            <h3 class="modal-title" id="modal-title">Book WashTime</h3>
+        </div>
+        <div class="modal-body" id="modal-body">
+            <span class="bold-text">Tidspunkt: </span> {{ctrl.currentTime.Time | date:'medium'}} <br />
+            <span class="bold-text"> Maskine:</span> {{ctrl.currentTime.Machine}}
+                <div ng-if="ctrl.currentTime.IsBooked">
+                    <span class="bold-text">Værelse:</span> {{ctrl.currentTime.RoomNumber}}
+</div>
+                <div ng-if="!ctrl.currentTime.IsBooked">
+                    <span class="bold-text">Værelse:</span> <input name="roomInput" type="number" ng-model="ctrl.currentTime.RoomNumber" placeholder="Roomnumber" min="1" max="100" ng-pattern="integerval" roomValidator required />
+                    <br />
+                    <span ng-show="!myForm.roomInput.$valid">
+                        The roomnumber is not valid, please type in a valid one in order to book a machine.
 
-<script>
-    var id;
-    var actualtd;
-    $(document).on('click', '.rid', function() {
-        actualtd = $(this);
-        id = $(this).find("#ID").data().value;
-        var url = $('#myModal').data('url') + '/' + id.toString();
-        $.get(url, function(data) {
-            $('#ModalBody').html(data);
-        });
+                    </span>
+                </div>
+                <div ng-if="ctrl.success">
+                    <br />
+                    Tillykke bookingen er gennemført.
+                </div>
+            <div ng-if="ctrl.Cancelsuccess">
+                <br />
+                Tillykke bookingen er afmeldt!
+            </div>
+</div>
+        <div class="modal-footer">
+            <button ng-if="ctrl.currentTime.IsBooked" class="btn btn-primary" type="button" ng-click="ctrl.CancelBooking()">Cancel Bookig</button>
+            <button ng-if="!ctrl.currentTime.IsBooked" class="btn btn-primary" type="button" ng-click="ctrl.ok()" ng-disabled="myForm.$invalid">Book tid</button>
+            <button class="btn btn-warning" type="button" ng-click="ctrl.cancel()">Close</button>
+        </div>
+    </form>
+    </script>
 
-        $('#myModal').modal('show');
-    });
+</div>
+    
+</div>
 
-    $(document).on('click', '.close', function() {
-        $.ajax({
-            url: '@Url.Action("IsBooked", "Home")',
-            method: "Get",
-            cache: false,
-            data: { Id: id }
-        }).done(function(d) {
-            if (d) {
-                actualtd.addClass('booked');
-                getRoomNumber();              
-            }
-        });
-    });
-
-    function getRoomNumber() {
-        $.ajax({
-                url: '@Url.Action("GetRoomNumber", "Home")',
-            method: "Get",
-            cache: false,
-            data: { Id: id }
-        }).done(function (d) {
-            if (d != -1 || d != 0) {
-                actualtd.remove('.roomnumber');
-                actualtd.append(d);
-            }
-        });
-    }
-
-
-</script>
-@*</div>*@
+       
 
 @section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
+                @Scripts.Render("~/bundles/jqueryval")
+            }

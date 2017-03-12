@@ -2,3 +2,7 @@ C:\Users\sth\documents\visual studio 2015\Projects\VaskerietOMA\Model\bin\Debug\
 C:\Users\sth\documents\visual studio 2015\Projects\VaskerietOMA\Model\bin\Debug\Model.pdb
 C:\Users\sth\documents\visual studio 2015\Projects\VaskerietOMA\Model\obj\Debug\Model.dll
 C:\Users\sth\documents\visual studio 2015\Projects\VaskerietOMA\Model\obj\Debug\Model.pdb
+C:\Users\Simon\Desktop\VaskerietOMA\VaskerietOMA\Model\bin\Debug\Model.dll
+C:\Users\Simon\Desktop\VaskerietOMA\VaskerietOMA\Model\bin\Debug\Model.pdb
+C:\Users\Simon\Desktop\VaskerietOMA\VaskerietOMA\Model\obj\Debug\Model.dll
+C:\Users\Simon\Desktop\VaskerietOMA\VaskerietOMA\Model\obj\Debug\Model.pdb

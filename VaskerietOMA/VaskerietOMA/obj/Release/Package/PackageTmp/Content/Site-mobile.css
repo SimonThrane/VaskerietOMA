@@ -2,6 +2,7 @@
 	display:none;	
 }
 
+
 @media screen and (max-width: 1200px){
 	
 	.feature { max-width:1080px; margin-left:auto; margin-right:auto; padding:0; }
@@ -20,7 +21,14 @@
     content: " ";
     height: 100%;
   }
-  
+
+  .weektimeTable {
+      display: none;
+  }
+
+  #weektabel {
+      display: none;
+  }
   #outer { padding:20px; }
 	
 	#nav { height:auto; position:relative; top:auto; left:auto; text-align:center; padding-top:20px; }
@@ -36,9 +44,12 @@
 	#footer .dotted:before, 
 	#footer .dotted:after { display:none; }
 
-    .rid {
-        width: 100%;
-        float: none;
+    .DayTabs {
+        display: block;
+    }
+
+    .DayTabs md-content md-tabs md-tabs-wrapper {
+        display: block;
     }
 
     .cols .col.two_thirds,
@@ -84,6 +95,8 @@
 	.contact .dots:after,
 	.contact .dots .inner:after { display:none; }
 	.contact .dots .inner { padding:40px 0 0; }
+
+
 	
 	#events_grid { margin:0; }
 	#events_grid .grid { height:auto!important; }
@@ -92,11 +105,41 @@
 	#events_grid .grid-item .item-inner { padding:0 10px; }
 	.event_mobile_thumb { display:block; margin-bottom:50px; }
 	.table.event .cell.thumb { display:none; }
+
+    .dayTable td {
+        width: 300px;
+    }
 	
 }
 
 @media screen and (max-width: 480px){
+
+   .dayTable td {
+        width: 220px;
+    }
+
+       .input-group {
+        padding: 2px;
+        float: right;
+        margin-left: 10px;
+        width: 190px;
+           margin-bottom: 10px;
+    }
+       label {
+           margin-left: auto;
+           margin-right: auto;
+       }
 	
+       #submit-button {
+           text-align: center;
+           width: 80%;
+           margin-left: auto;
+           margin-right: auto;
+           float: none;
+       }
+
+       input{display:inline-block}
+
 	p.quote { width:100%; font-size:28px!important; line-height:38px!important; }
 	
 	#footer { padding:20px; }

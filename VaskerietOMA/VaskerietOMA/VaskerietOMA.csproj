@@ -238,7 +238,10 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModel\TimeTableViewModel.cs" />
     <Compile Include="ViewModel\TopListViewModel.cs" />
+    <Compile Include="ViewModel\WashDayViewModel.cs" />
+    <Compile Include="ViewModel\WashTimeViewModel.cs" />
     <Compile Include="WashTime.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -287,6 +290,7 @@
     <Content Include="ms-icon-70x70.png" />
     <Content Include="ReleaseNotes.txt" />
     <Content Include="Scripts\AjaxScript.js" />
+    <Content Include="Scripts\AngularController\weekctrl.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">

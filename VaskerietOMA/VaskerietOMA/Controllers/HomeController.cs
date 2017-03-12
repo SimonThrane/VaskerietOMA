@@ -24,17 +24,18 @@ namespace VaskerietOMA.Controllers
         {
             List<WashTime> times = db.WashTimes.Where(x => x.Time.Year == DateTime.Today.Year).ToList();
             //List<WashTime> thisWeek = times.Where(time => HelperFunctions.GetIso8601WeekOfYear(time.Time) == HelperFunctions.GetIso8601WeekOfYear(DateTime.Today)).ToList();
-           List<WashTime> thisWeek =
-               times.Where(
-                   time =>
-                       HelperFunctions.GetIso8601WeekOfYear(time.Time) ==
-                       HelperFunctions.GetIso8601WeekOfYear(DateTime.Today)
-                   ).OrderBy(f => f.Time.Date).ThenBy(f => f.Time.Hour).ThenBy(f=>f.Machine
-                   ).GroupBy(
-                       f => new {f.Time.Date, f.Time.Hour, f.Machine}
-                   ).Select(
-                       group => group.First()
-                   ).ToList();
+            List<WashTime> thisWeek =
+                times.Where(
+                    time =>
+                        HelperFunctions.GetIso8601WeekOfYear(time.Time) ==
+                        HelperFunctions.GetIso8601WeekOfYear(DateTime.Today)
+                    ).OrderBy(f => f.Time.Date).ThenBy(f => f.Time.Hour).ThenBy(f => f.Machine
+                    ).GroupBy(
+                        f => new { f.Time.Date, f.Time.Hour, f.Machine }
+                    ).Select(
+                        group => group.First()
+                    ).ToList();
+
 
             if (thisWeek.Count<(126*2))
             {
@@ -43,7 +44,10 @@ namespace VaskerietOMA.Controllers
                 thisWeek = times.Where(time => HelperFunctions.GetIso8601WeekOfYear(time.Time) == HelperFunctions.GetIso8601WeekOfYear(DateTime.Today)).ToList();
             }
             ViewBag.Weeknumber = HelperFunctions.GetIso8601WeekOfYear(DateTime.Now);
-            return View(thisWeek.ToList());
+
+            TimeTableViewModel weekTableViewModel = new TimeTableViewModel(thisWeek);
+
+            return View(weekTableViewModel);
         }
 
         private void FillWeek()
@@ -69,25 +73,6 @@ namespace VaskerietOMA.Controllers
             }
             return View("Day", thisWeek.ToList());
         }
-
-        //public ActionResult Day(DateTime day)
-        //{
-        //    List<WashTime> times = db.WashTimes.Where(x => x.Time.Day == day.Day).ToList();
-        //    List<WashTime> thisWeek = times.Where(time => time.Time.Date == day.Date).ToList();
-        //    if (thisWeek.Count < 16)
-        //    {
-        //        filler.FillDay(day,"Left");
-        //        filler.FillDay(day, "Right");
-        //    }
-
-        //    if (Request.IsAjaxRequest())
-        //    {
-        //        return (PartialView(thisWeek.ToList()));
-        //    }
-        //    return View("Day", thisWeek.ToList());
-        //}
-
-       
 
         public ActionResult About()
         {
@@ -153,39 +138,7 @@ namespace VaskerietOMA.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        public ActionResult Booking(int id)
-        {
-            WashTime currentbooking = db.WashTimes.Find(id);
-            if (currentbooking == null)
-            {
-                return HttpNotFound();
-            }
-
-            return PartialView("_Booking", currentbooking);
-        }
-
-        public bool isBooked(int ID)
-        {
-            WashTime currentbooking = db.WashTimes.Find(ID);
-            if (currentbooking == null)
-            {
-                return false;
-            }
-
-            return currentbooking.IsBooked;
-        }
-
-        public int GetRoomNumber(int ID)
-        {
-            WashTime currentbooking = db.WashTimes.Find(ID);
-            if (currentbooking == null)
-            {
-                return -1;
-            }
-
-            return currentbooking.RoomNumber;
-        }
-
+       
         [WebMethod]
         public JsonResult GetTopList()
         {
@@ -211,66 +164,64 @@ namespace VaskerietOMA.Controllers
             return Json(topListViewModel, JsonRequestBehavior.AllowGet);
         }
 
-        [HttpPost]
-        public string CancelBooking(int ID)
+        
+        public TimeTableViewModel getTimeTable()
         {
-           
-            WashTime currentbooking = db.WashTimes.Find(ID);
+            TimeTableViewModel currentWeekTimeTableViewModel =  new TimeTableViewModel();
+            return currentWeekTimeTableViewModel;
+        }
+
+        [WebMethod]
+        public Boolean BookTime(WashTimeViewModel vm)
+        {
+            WashTime currentbooking = db.WashTimes.Find(vm.ID);
             if (currentbooking == null)
             {
-                return "Det lykkedes desværre ikke at afbooke tiden";
+                return false;
             }
-            string returnstring = "";
+
+            currentbooking.IsBooked = true;
+            currentbooking.RoomNumber = vm.RoomNumber;
+            db.Entry(currentbooking).State = EntityState.Modified;
+            try
+            {
+                db.SaveChangesAsync();
+                return true;
+
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+
+        }
+
+        [WebMethod]
+        public Boolean CancelBooking(WashTimeViewModel vm)
+        {
+            WashTime currentbooking = db.WashTimes.Find(vm.ID);
+            if (currentbooking == null)
+            {
+                return false;
+            }
             currentbooking.IsBooked = false;
             currentbooking.RoomNumber = 0;
             db.Entry(currentbooking).State = EntityState.Modified;
             try
             {
                 db.SaveChanges();
-                returnstring = "Det lykkedes " + currentbooking.Machine + " er blevet afbooket " +
-                               currentbooking.Time.ToShortTimeString();
+                return true;
 
             }
             catch (Exception)
             {
 
-                returnstring = "Det lykkedes desværre ikke at afbooke tiden";
-
+                return false;
             }
-
-            return returnstring;
         }
 
-
-        [HttpPost]
-        public string Booking(int RoomNumber, [Bind(Include = "ID")] WashTime currentTime)
-        {
-            WashTime currentbooking = db.WashTimes.Find(currentTime.ID); 
-            if (currentbooking == null)
-            {
-                return "Det lykkedes desværre ikke at booke tiden";
-            }
-
-            currentbooking.IsBooked = true;
-            currentbooking.RoomNumber = RoomNumber;
-            db.Entry(currentbooking).State = EntityState.Modified;
-            string returnstring = "";
-            try
-            {
-                db.SaveChangesAsync();
-                returnstring = "Det lykkedes " + currentbooking.Machine + " er booket til " +
-                               currentbooking.Time.ToShortTimeString();
-
-            }
-            catch (Exception)
-            {
-
-                returnstring = "Det lykkedes desværre ikke at booke tiden";
-
-            }
-
-            return returnstring;
-
-        }
+      
     }
+
+   
 }

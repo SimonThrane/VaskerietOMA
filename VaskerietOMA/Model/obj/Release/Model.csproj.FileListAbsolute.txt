@@ -3,3 +3,8 @@ C:\Users\sth\Documents\Visual Studio 2015\Projects\VaskerietOMA\Model\bin\Releas
 C:\Users\sth\Documents\Visual Studio 2015\Projects\VaskerietOMA\Model\obj\Release\Model.csprojResolveAssemblyReference.cache
 C:\Users\sth\Documents\Visual Studio 2015\Projects\VaskerietOMA\Model\obj\Release\Model.dll
 C:\Users\sth\Documents\Visual Studio 2015\Projects\VaskerietOMA\Model\obj\Release\Model.pdb
+C:\Users\Simon\Desktop\VaskerietOMA\VaskerietOMA\Model\bin\Release\Model.dll
+C:\Users\Simon\Desktop\VaskerietOMA\VaskerietOMA\Model\bin\Release\Model.pdb
+C:\Users\Simon\Desktop\VaskerietOMA\VaskerietOMA\Model\obj\Release\Model.csprojResolveAssemblyReference.cache
+C:\Users\Simon\Desktop\VaskerietOMA\VaskerietOMA\Model\obj\Release\Model.dll
+C:\Users\Simon\Desktop\VaskerietOMA\VaskerietOMA\Model\obj\Release\Model.pdb

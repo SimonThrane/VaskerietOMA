@@ -3,6 +3,204 @@
     padding-bottom: 20px;
 }
 
+h1 { color: #7c795d; font-family: 'Trocchi', serif; font-size: 45px; font-weight: normal; line-height: 48px; margin: 0; text-align:center; padding-bottom:25px;}
+
+h2 { color: #7c795d; font-family: 'Source Sans Pro', sans-serif; font-size: 28px; font-weight: 400; line-height: 32px; margin: 0 0 24px; }
+
+
+p { color: #4c4a37; font-family: 'Source Sans Pro', sans-serif; font-size: 18px; line-height: 32px; margin: 0 0 24px; }
+
+table {
+    outline: none;
+    width: 100%;
+}
+
+.daytable {
+    width: 100%;
+}
+
+.head_nav th {
+    width: 12.5%;
+}
+
+    th,td
+    {
+        margin: 0;
+        min-height: 30px;
+        text-align: center;
+        position: relative;
+        border: 1px solid #CFCFCF;
+        border-collapse: collapse;
+    }
+
+       
+    th
+    {
+        font-family: sans-serif;
+        font-size: 16pt;
+        text-align: center;
+        background: #A8CD1B;
+        color: white;
+        padding: 10px;
+
+    }
+
+    td {
+        height: 74px;
+    }
+
+    .modal-header, h4, .close {
+      background-color: #5cb85c;
+      color:white !important;
+      text-align: center;
+      font-size: 30px;
+  }
+
+
+.modal {
+  text-align: center;
+}
+
+
+
+@media screen and (min-width: 768px) { 
+  .modal:before {
+    display: inline-block;
+    vertical-align: middle;
+    content: " ";
+    height: 100%;
+  }
+
+   .DayTabs {
+      display: none;
+}
+
+  .weektimeTable {
+      display: block;
+  }
+
+  #weektabel {
+      display: block;
+  }
+}
+
+    .washtime {
+        font-size: 14pt;
+
+    }
+
+     .washtime:hover {
+         color: white;
+         background-color: orange;
+         cursor: pointer;
+     }
+
+    .booked {
+        color: white;
+        background-color: red;
+        font-size: 14pt;
+        
+    }
+
+    .table-header {
+        background: greenyellow;
+        height: 36px;
+        text-align: center;
+    }
+
+
+    .time {
+        background: #A8CD1B;
+        color: white;
+        font-size: 14pt;
+        min-height: 40px;
+
+    }
+
+    .bold-text {
+        font-weight: bold;
+    }
+
+    .DayTabs md-content {
+  background-color: transparent !important; }
+  .DayTabs md-content md-tabs {
+    background: #f6f6f6;
+    border: 1px solid #e1e1e1;
+      width: 100%;
+  }
+
+  .daytable {
+      position: relative;
+      width: 80%;
+      margin-left: auto;
+      margin-right: auto;
+  }
+
+
+  .daytable td{
+      width: 10%;
+          min-width: 89px;
+  }
+  .daytable td{
+    height: 77px;
+    line-height: 24px;    
+}
+
+
+    .DayTabs md-content md-tabs md-tabs-wrapper {
+      background: white;
+    }
+
+  .DayTabs md-content h1:first-child {
+    margin-top: 0; }
+
+  .full-width {
+      width: 100%;
+  }
+
+@media only screen and (max-width: 600px) {
+    .weektimeTable {
+      display: none;
+  }
+  
+
+
+    .daytable {
+    display: block;
+}
+
+  #weektabel {
+      display: none;
+  }
+
+ .DayTabs md-content md-tabs md-tabs-wrapper {
+        display: block;
+    }
+
+ .DayTabs {
+     display: block;
+ }
+}
+
+.modal-dialog {
+  display: inline-block;
+  vertical-align: middle;
+  line-height:22px;
+}
+
+
+  .modal-footer {
+      background-color: #f9f9f9;
+  }
+
+
+  .booked{
+      background-color: red;
+      color: white;
+  }
+
+
+
 /* Set padding to keep content from hitting the edges */
 .body-content {
     padding-left: 15px;
@@ -22,6 +220,8 @@ select,
 textarea {
     max-width: 290px;
 }
+
+
 
 
 .bargainbarter-margin-top {
@@ -121,6 +321,8 @@ body {
 	max-width:1080px;
 	margin:0 auto;
 }
+
+
 
 img {
     display: block;
