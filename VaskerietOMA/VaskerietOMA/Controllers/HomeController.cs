@@ -95,50 +95,70 @@ namespace VaskerietOMA.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Contact(string Name, string Machine, string Text)
+        public ActionResult Contact(EmailFormModel model)
         {
-            SmtpClient client = new SmtpClient
+            if (ModelState.IsValid)
             {
-                Port = 587,
-                DeliveryMethod = SmtpDeliveryMethod.Network,
-                UseDefaultCredentials = false,
-                Credentials = new NetworkCredential("administrator@vaskerietoma.dk", "23HejMed5"),
-                Host = "smtp.unoeuro.com"
-            };
-            MailMessage mail = new MailMessage("administrator@vaskerietoma.dk", "sthranehansen@gmail.com")
-            {
-                Subject = "Fejlmeddelse af den " + Machine + " vaskemaskine",
-                Body = $"{Text} \n Mvh \n {Name}"
-            };
-            client.Send(mail);
+                SmtpClient client = new SmtpClient
+                {
+                    Port = 587,
+                    DeliveryMethod = SmtpDeliveryMethod.Network,
+                    UseDefaultCredentials = false,
+                    Credentials = new NetworkCredential("administrator@vaskerietoma.dk", "23HejMed5"),
+                    Host = "smtp.unoeuro.com"
+                };
 
-            return RedirectToAction("Index","Home");
+                var body = "<p>Email From: {0} ({1})</p><p>Message:</p><p>{2}</p>";
+                var message = new MailMessage();
+                message.To.Add(new MailAddress("sthranehansen@gmail.com")); //replace with valid value
+                message.Subject = "Fejlmeddelse af maskine";
+                message.Body = string.Format(body, model.FromName, model.FromEmail, model.Message);
+                message.IsBodyHtml = true;
+                if (model.Upload != null && model.Upload.ContentLength > 0)
+                {
+                    message.Attachments.Add(new Attachment(model.Upload.InputStream, Path.GetFileName(model.Upload.FileName)));
+                }
+
+                client.Send(message);
+            }
+
+            return RedirectToAction("Index", "Home");
         }
 
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult ContactIdea(string Name, string Text)
+        public ActionResult ContactIdea(EmailFormModel model)
         {
-            SmtpClient client = new SmtpClient
+            if (ModelState.IsValid)
             {
-                Port = 587,
-                DeliveryMethod = SmtpDeliveryMethod.Network,
-                UseDefaultCredentials = false,
-                Credentials = new NetworkCredential("administrator@vaskerietoma.dk", "23HejMed5"),
-                Host = "smtp.unoeuro.com"
-            };
-            MailMessage mail = new MailMessage("administrator@vaskerietoma.dk", "sthranehansen@gmail.com")
-            {
-                Subject = "Forslag til forbedring af VaskerietOMa",
-                Body = $"{Text} \n Mvh \n {Name}"
-            };
-            client.Send(mail);
+                SmtpClient client = new SmtpClient
+                {
+                    Port = 587,
+                    DeliveryMethod = SmtpDeliveryMethod.Network,
+                    UseDefaultCredentials = false,
+                    Credentials = new NetworkCredential("administrator@vaskerietoma.dk", "23HejMed5"),
+                    Host = "smtp.unoeuro.com"
+                };
+
+                var body = "<p>Email From: {0} ({1})</p><p>Message:</p><p>{2}</p>";
+                var message = new MailMessage();
+                message.To.Add(new MailAddress("sthranehansen@gmail.com")); //replace with valid value
+                message.Subject = "Ide til Vaskeriet OMA";
+                message.Body = string.Format(body, model.FromName, model.FromEmail, model.Message);
+                message.IsBodyHtml = true;
+                if (model.Upload != null && model.Upload.ContentLength > 0)
+                {
+                    message.Attachments.Add(new Attachment(model.Upload.InputStream, Path.GetFileName(model.Upload.FileName)));
+                }
+
+                client.Send(message);
+            }
 
             return RedirectToAction("Index", "Home");
         }
 
-       
+
         [WebMethod]
         public JsonResult GetTopList()
         {
