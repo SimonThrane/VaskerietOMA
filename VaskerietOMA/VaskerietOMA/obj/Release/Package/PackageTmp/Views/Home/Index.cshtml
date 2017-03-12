@@ -582,11 +582,10 @@
                     <span class="bold-text">Værelse:</span> {{ctrl.currentTime.RoomNumber}}
 </div>
                 <div ng-if="!ctrl.currentTime.IsBooked">
-                    <span class="bold-text">Værelse:</span> <input name="roomInput" type="number" ng-model="ctrl.currentTime.RoomNumber" placeholder="Roomnumber" min="1" max="100" ng-pattern="integerval" roomValidator required />
+                    @*<span class="bold-text">Værelse:</span> <input name="roomInput" type="number" ng-model="ctrl.currentTime.RoomNumber" placeholder="Roomnumber" min="1" max="100" ng-pattern="integerval" roomValidator required />*@
                     <br />
-                    <span ng-show="!myForm.roomInput.$valid">
-                        The roomnumber is not valid, please type in a valid one in order to book a machine.
-
+                    <span ng-show="!ctrl.User.IsLoggedIn">
+                        Log venligst ind for at booke en maskine
                     </span>
                 </div>
                 <div ng-if="ctrl.success">
@@ -599,8 +598,8 @@
             </div>
 </div>
         <div class="modal-footer">
-            <button ng-if="ctrl.currentTime.IsBooked" class="btn btn-primary" type="button" ng-click="ctrl.CancelBooking()">Cancel Bookig</button>
-            <button ng-if="!ctrl.currentTime.IsBooked" class="btn btn-primary" type="button" ng-click="ctrl.ok()" ng-disabled="myForm.$invalid">Book tid</button>
+            <button ng-if="ctrl.currentTime.IsBooked && (ctrl.currentTime.RoomNumber == ctrl.User.RoomNumber) " class="btn btn-primary" type="button" ng-click="ctrl.CancelBooking()">Cancel Bookig</button>
+            <button ng-if="!ctrl.currentTime.IsBooked " class="btn btn-primary" type="button" ng-click="ctrl.ok()" ng-disabled="!ctrl.User.IsLoggedIn">Book tid</button>
             <button class="btn btn-warning" type="button" ng-click="ctrl.cancel()">Close</button>
         </div>
     </form>

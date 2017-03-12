@@ -54,9 +54,9 @@ namespace VaskerietOMA
             //   consumerKey: "",
             //   consumerSecret: "");
 
-            //app.UseFacebookAuthentication(
-            //   appId: "",
-            //   appSecret: "");
+            app.UseFacebookAuthentication(
+               appId: "1093687890736142",
+               appSecret: "53cafbf2249f454d4ba9d6d878a37535");
 
             //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
             //{

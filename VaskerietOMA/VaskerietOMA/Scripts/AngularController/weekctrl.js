@@ -2,15 +2,31 @@
 
 (function(module) {
     module.controller('WeekController',
-        function($uibModal, $http, $scope) {
+        function ($uibModal, $http, $scope) {
             var ctrl = this;
             ctrl.Weeknumber = 1;
             ctrl.TimeTable = null;
+            ctrl.User = null;
+            ctrl.Today = new Date();
+
+            ctrl.weekchange = function() {
+                console.log(ctrl.Today);
+                ctrl.getNewTimeTsble(ctrl.Today);
+            }
 
             $scope.init = function(timetable) {
                 ctrl.TimeTable = timetable;
                 ctrl.Weeknumber = timetable.WeekNumber;
+                ctrl.User = timetable.User;
+            }
 
+            ctrl.getUserViewModel = function() {
+                $http.post('Home/GetBookingViewModel')
+                    .then(function(response, status, headers, config) {
+                        if (response.data) {
+                            ctrl.User = response.data;
+                        }
+                    });
             }
 
             ctrl.bookTime = function(washtime) {
@@ -22,7 +38,12 @@
                     resolve: {
                         currentTime: function() {
                             return washtime;
-                        }
+                        },
+                        
+                    user: function() {
+                        return ctrl.User;
+                    }
+
                     }
                 });
 
@@ -32,8 +53,6 @@
                     function() {
                     });
             };
-
-
         });
 })(angular.module('myApp'));
 
@@ -55,16 +74,18 @@ app.directive('roomValidator', function () {
     };
 });
 
-app.controller('BookingController', function ($uibModalInstance, $http, currentTime) {
+app.controller('BookingController', function ($uibModalInstance, $http, currentTime, user) {
     var ctrl = this;
     ctrl.currentTime = currentTime;
-
+    ctrl.User = user;
 
     ctrl.ok = function () {
+        ctrl.currentTime.RoomNumber = ctrl.User.RoomNumber;
         $http.post('Home/BookTime', ctrl.currentTime)
             .then(function (response, status, headers, config) {
                 if (response.data) {
                     ctrl.success = true;
+                    ctrl.Cancelsuccess  = false;
                     ctrl.currentTime.IsBooked = true;
                 }
             });
@@ -80,6 +101,7 @@ app.controller('BookingController', function ($uibModalInstance, $http, currentT
             $http.post('Home/CancelBooking', ctrl.currentTime)
             .then(function (response, status, headers, config) {
                 if (response.data) {
+                    ctrl.success = false;
                     ctrl.Cancelsuccess = true;
                     ctrl.currentTime.IsBooked = false;
                     ctrl.RoomNumber = 0;

@@ -8,22 +8,24 @@ using System.Net;
 using System.Net.Mail;
 using System.Web.Mvc;
 using System.Web.Services;
+using Microsoft.AspNet.Identity;
 using MyModel.WashTime;
 using VaskerietOMA.DataAccess;
 using VaskerietOMA.DatabaseFunction;
+using VaskerietOMA.Models;
 using VaskerietOMA.ViewModel;
 
 namespace VaskerietOMA.Controllers
 {
     public class HomeController : Controller
     {
+        private ApplicationDbContext applicationDb = new ApplicationDbContext();
         private WashContext db = new WashContext();
         private DatabaseFiller filler =new DatabaseFiller();
 
        public ActionResult Index()
         {
             List<WashTime> times = db.WashTimes.Where(x => x.Time.Year == DateTime.Today.Year).ToList();
-            //List<WashTime> thisWeek = times.Where(time => HelperFunctions.GetIso8601WeekOfYear(time.Time) == HelperFunctions.GetIso8601WeekOfYear(DateTime.Today)).ToList();
             List<WashTime> thisWeek =
                 times.Where(
                     time =>
@@ -43,12 +45,16 @@ namespace VaskerietOMA.Controllers
                 times = db.WashTimes.Where(x => x.Time.Year == DateTime.Today.Year).ToList();
                 thisWeek = times.Where(time => HelperFunctions.GetIso8601WeekOfYear(time.Time) == HelperFunctions.GetIso8601WeekOfYear(DateTime.Today)).ToList();
             }
+
             ViewBag.Weeknumber = HelperFunctions.GetIso8601WeekOfYear(DateTime.Now);
 
             TimeTableViewModel weekTableViewModel = new TimeTableViewModel(thisWeek);
+            weekTableViewModel.User = GetBookingViewModel();
 
             return View(weekTableViewModel);
         }
+
+        
 
         private void FillWeek()
         {
@@ -154,7 +160,7 @@ namespace VaskerietOMA.Controllers
 
                 client.Send(message);
             }
-
+            
             return RedirectToAction("Index", "Home");
         }
 
@@ -190,6 +196,17 @@ namespace VaskerietOMA.Controllers
             TimeTableViewModel currentWeekTimeTableViewModel =  new TimeTableViewModel();
             return currentWeekTimeTableViewModel;
         }
+
+        private BookingViewModel GetBookingViewModel()
+        {
+            var user = applicationDb.Users.Find(System.Web.HttpContext.Current.User.Identity.GetUserId());
+            var currentSessionUser = user != null ? new BookingViewModel(user) : new BookingViewModel();
+
+            return currentSessionUser;
+
+        }
+
+        
 
         [WebMethod]
         public Boolean BookTime(WashTimeViewModel vm)

@@ -8,6 +8,14 @@ namespace VaskerietOMA.Models
         [Required]
         [Display(Name = "Email")]
         public string Email { get; set; }
+
+        [Required]
+        [Display(Name = "Navn")]
+        public string Name { get; set; }
+
+        [Required]
+        [Display(Name = "Værelsesnr.")]
+        public int RoomNumber { get; set; }
     }
 
     public class ExternalLoginListViewModel
@@ -76,9 +84,16 @@ namespace VaskerietOMA.Models
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
-        [Display(Name = "Confirm password")]
+        [Display(Name = "Bekræft password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+
+        [Required] [Display(Name = "Navn")] public string Name { get; set; }
+
+        [Required]
+        [Display(Name = "Værelsesnr.")]
+        public int RoomNumber { get; set; }
+
     }
 
     public class ResetPasswordViewModel
@@ -108,5 +123,23 @@ namespace VaskerietOMA.Models
         [EmailAddress]
         [Display(Name = "Email")]
         public string Email { get; set; }
+    }
+
+    public class BookingViewModel
+    {
+        public bool IsLoggedIn { get; set; }
+        public int RoomNumber { get; set; }
+
+        public BookingViewModel(ApplicationUser user)
+        {
+            IsLoggedIn = true;
+            RoomNumber = user.RoomNumber;
+        }
+
+        public BookingViewModel()
+        {
+            IsLoggedIn = false;
+            RoomNumber = 0;
+        }
     }
 }

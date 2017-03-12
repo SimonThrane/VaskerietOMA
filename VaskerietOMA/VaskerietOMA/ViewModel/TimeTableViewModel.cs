@@ -4,6 +4,7 @@ using System.Linq;
 using MyModel.WashTime;
 using VaskerietOMA.DataAccess;
 using VaskerietOMA.DatabaseFunction;
+using VaskerietOMA.Models;
 
 namespace VaskerietOMA.ViewModel
 {
@@ -17,6 +18,7 @@ namespace VaskerietOMA.ViewModel
         public WashDayViewModel Saturday;
         public WashDayViewModel Sunday;
         public int WeekNumber;
+        public BookingViewModel User { get; set; }
         private DatabaseFiller filler = new DatabaseFiller();
 
         private void FillWeek()
