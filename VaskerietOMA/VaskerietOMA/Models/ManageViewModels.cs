@@ -83,4 +83,28 @@ namespace VaskerietOMA.Models
         public string SelectedProvider { get; set; }
         public ICollection<System.Web.Mvc.SelectListItem> Providers { get; set; }
     }
+
+    public class UserAdminStrationViewModel
+    {
+        public List<User> Users { get; set; }
+    }
+
+    public class User
+    {
+        public string Email { get; set; }
+        public string Name { get; set; }
+        public int RoomNumber { get; set; }
+        public string Id { get; set; }
+
+        public User(ApplicationUser user)
+        {
+            Id = user.Id;
+            Email = user.Email;
+            Name = user.Name;
+            RoomNumber = user.RoomNumber;
+        }
+
+        public User()
+        {}
+    }
 }

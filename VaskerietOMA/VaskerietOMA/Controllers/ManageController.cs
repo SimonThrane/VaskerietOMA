@@ -1,7 +1,12 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Data.Entity;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Services;
+using System.Web.WebPages;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
@@ -49,6 +54,14 @@ namespace VaskerietOMA.Controllers
             }
         }
 
+
+        public ActionResult UserAdministration()
+        {
+            var db = new ApplicationDbContext();
+            UserAdminStrationViewModel model = new UserAdminStrationViewModel();
+            model.Users = db.Users.Where(c=> c.Name != String.Empty ).ToList().Select(c => new User(c)).ToList();
+            return View(model);
+        }
         //
         // GET: /Manage/Index
         public async Task<ActionResult> Index(ManageMessageId? message)
@@ -98,12 +111,41 @@ namespace VaskerietOMA.Controllers
             return RedirectToAction("ManageLogins", new { Message = message });
         }
 
+
+        [WebMethod]
+        public Boolean RemoveUser(User delUser)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            ApplicationUser user = db.Users.Find(delUser.Id);
+            if (user == null)
+            {
+                return false;
+            }
+            user.UserName = String.Empty;
+            user.Name = String.Empty;
+            user.RoomNumber = 0;
+            user.Email = String.Empty;
+
+            db.Entry(user).State = EntityState.Modified;
+            try
+            {
+                db.SaveChangesAsync();
+                return true;
+
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
         //
         // GET: /Manage/AddPhoneNumber
         public ActionResult AddPhoneNumber()
         {
             return View();
         }
+
 
         //
         // POST: /Manage/AddPhoneNumber

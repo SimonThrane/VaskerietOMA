@@ -226,8 +226,11 @@ C:\Users\Simon\Dropbox\IHA\VaskerietOMA\VaskerietOMA\VaskerietOMA\bin\Microsoft.
 C:\Users\Simon\Dropbox\IHA\VaskerietOMA\VaskerietOMA\VaskerietOMA\bin\Model.dll
 C:\Users\Simon\Dropbox\IHA\VaskerietOMA\VaskerietOMA\VaskerietOMA\bin\Newtonsoft.Json.dll
 C:\Users\Simon\Dropbox\IHA\VaskerietOMA\VaskerietOMA\VaskerietOMA\bin\Owin.dll
+C:\Users\Simon\Dropbox\IHA\VaskerietOMA\VaskerietOMA\VaskerietOMA\bin\System.Net.Http.Formatting.dll
 C:\Users\Simon\Dropbox\IHA\VaskerietOMA\VaskerietOMA\VaskerietOMA\bin\System.Runtime.InteropServices.RuntimeInformation.dll
 C:\Users\Simon\Dropbox\IHA\VaskerietOMA\VaskerietOMA\VaskerietOMA\bin\System.Web.Helpers.dll
+C:\Users\Simon\Dropbox\IHA\VaskerietOMA\VaskerietOMA\VaskerietOMA\bin\System.Web.Http.dll
+C:\Users\Simon\Dropbox\IHA\VaskerietOMA\VaskerietOMA\VaskerietOMA\bin\System.Web.Http.WebHost.dll
 C:\Users\Simon\Dropbox\IHA\VaskerietOMA\VaskerietOMA\VaskerietOMA\bin\System.Web.Mvc.dll
 C:\Users\Simon\Dropbox\IHA\VaskerietOMA\VaskerietOMA\VaskerietOMA\bin\System.Web.Optimization.dll
 C:\Users\Simon\Dropbox\IHA\VaskerietOMA\VaskerietOMA\VaskerietOMA\bin\System.Web.Razor.dll
@@ -243,6 +246,9 @@ C:\Users\Simon\Dropbox\IHA\VaskerietOMA\VaskerietOMA\VaskerietOMA\bin\Microsoft.
 C:\Users\Simon\Dropbox\IHA\VaskerietOMA\VaskerietOMA\VaskerietOMA\bin\Microsoft.AI.WindowsServer.xml
 C:\Users\Simon\Dropbox\IHA\VaskerietOMA\VaskerietOMA\VaskerietOMA\bin\Microsoft.ApplicationInsights.xml
 C:\Users\Simon\Dropbox\IHA\VaskerietOMA\VaskerietOMA\VaskerietOMA\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+C:\Users\Simon\Dropbox\IHA\VaskerietOMA\VaskerietOMA\VaskerietOMA\bin\System.Net.Http.Formatting.xml
+C:\Users\Simon\Dropbox\IHA\VaskerietOMA\VaskerietOMA\VaskerietOMA\bin\System.Web.Http.xml
+C:\Users\Simon\Dropbox\IHA\VaskerietOMA\VaskerietOMA\VaskerietOMA\bin\System.Web.Http.WebHost.xml
 C:\Users\Simon\Dropbox\IHA\VaskerietOMA\VaskerietOMA\VaskerietOMA\bin\System.Web.Helpers.xml
 C:\Users\Simon\Dropbox\IHA\VaskerietOMA\VaskerietOMA\VaskerietOMA\bin\System.Web.Mvc.xml
 C:\Users\Simon\Dropbox\IHA\VaskerietOMA\VaskerietOMA\VaskerietOMA\bin\System.Web.Optimization.xml

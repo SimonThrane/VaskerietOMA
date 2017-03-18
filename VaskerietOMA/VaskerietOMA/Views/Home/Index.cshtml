@@ -12,6 +12,13 @@
 <div ng-controller="WeekController as ctrl" ng-init="init(@Newtonsoft.Json.JsonConvert.SerializeObject(Model))" ng-cloak>
 <h3 class="pull-left">Uge nr: {{ctrl.Weeknumber}}</h3>
 <h1>Kalender</h1>
+    <div>
+        <label>
+            Vælg en uge:
+            <input id="WeekInput" type="week" name="input" ng-model="ctrl.Today" ng-change="ctrl.weekchange()"
+                   placeholder="YYYY-W##" ng-min="ctrl.MinDate" ng-max="ctrl.Maxdate" required />
+        </label>
+    </div>
 <table id="weektabel" class="col-md-12 col-lg-12 weektimeTable">
 <tr class="head_nav">
     <th>Time <span class="	glyphicon glyphicon-time"></span></th>
@@ -242,17 +249,11 @@
 </tr>
 
 </table>
-    
-    <label>
-        Vælg en uge
-        <input id="exampleInput" type="week" name="input" ng-model="ctrl.Today" ng-change="ctrl.weekchange()"
-               placeholder="YYYY-W##" min="2017-W10"
-               max="2020-W52" required />
-    </label>
+
 
 <div ng-cloak="" class="DayTabs">
 <md-content>
-<md-tabs md-dynamic-height="" md-border-bottom="">
+<md-tabs md-dynamic-height="" md-border-bottom="" md-selected="ctrl.selectedTab">
 <md-tab label="Monday">
     <md-content class="md-padding">
         <h1 class="md-display-2">Monday</h1>

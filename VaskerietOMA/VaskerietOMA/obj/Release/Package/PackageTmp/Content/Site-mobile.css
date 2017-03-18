@@ -56,7 +56,7 @@
 	.cols .col.one_third, 
 	.cols .col.one_half { width:100%; float:none; }
 	
-	.centertext img { display:block; margin:0 auto; }
+	./*centertext img { display:block; margin:0 auto; }
 	
 	.feature { margin-bottom:100px; }
 	.feature .callout { width:auto; height:auto; top:auto; left:auto; position:relative; }
@@ -85,11 +85,11 @@
 	.newsletter .dots .inner:after { display:none; }
 	.newsletter .dots .inner { padding:0; }
 	
-	.people .person { width:100%; margin:0 auto 50px; padding:0; float:none;  max-width:300px; }
+	.people .person { width:100%; margin:0 auto 50px; padding:0; float:none;  max-width:300px; }*/
 	
 	.menus_nav  { margin-bottom:70px; }
 	
-	.contact { margin:50px auto 0; }
+	/*.contact { margin:50px auto 0; }
 	.contact .dots { padding:0; background:none; }
 	.contact .dots:before, 
 	.contact .dots:after,
@@ -102,7 +102,7 @@
 	#events_grid .grid { height:auto!important; }
 	#events_grid .grid-sizer,
 	#events_grid .grid-item { width:100%; float:none!important; position:relative!important; top:auto!important; left:auto!important; }
-	#events_grid .grid-item .item-inner { padding:0 10px; }
+	#events_grid .grid-item .item-inner { padding:0 10px; }*/
 	.event_mobile_thumb { display:block; margin-bottom:50px; }
 	.table.event .cell.thumb { display:none; }
 

@@ -43,13 +43,20 @@ namespace VaskerietOMA.Controllers
             {
                 FillWeek();
                 times = db.WashTimes.Where(x => x.Time.Year == DateTime.Today.Year).ToList();
-                thisWeek = times.Where(time => HelperFunctions.GetIso8601WeekOfYear(time.Time) == HelperFunctions.GetIso8601WeekOfYear(DateTime.Today)).ToList();
+                thisWeek =
+                                times.Where(
+                                    time =>
+                                        HelperFunctions.GetIso8601WeekOfYear(time.Time) ==
+                                        HelperFunctions.GetIso8601WeekOfYear(DateTime.Today)
+                                    ).OrderBy(f => f.Time.Date).ThenBy(f => f.Time.Hour).ThenBy(f => f.Machine
+                                    ).GroupBy(
+                                        f => new { f.Time.Date, f.Time.Hour, f.Machine }
+                                    ).Select(
+                                        group => group.First()
+                                    ).ToList();
             }
 
-            ViewBag.Weeknumber = HelperFunctions.GetIso8601WeekOfYear(DateTime.Now);
-
-            TimeTableViewModel weekTableViewModel = new TimeTableViewModel(thisWeek);
-            weekTableViewModel.User = GetBookingViewModel();
+            TimeTableViewModel weekTableViewModel = new TimeTableViewModel(thisWeek) {User = GetBookingViewModel()};
 
             return View(weekTableViewModel);
         }
@@ -124,7 +131,6 @@ namespace VaskerietOMA.Controllers
                 {
                     message.Attachments.Add(new Attachment(model.Upload.InputStream, Path.GetFileName(model.Upload.FileName)));
                 }
-
                 client.Send(message);
             }
 
@@ -206,7 +212,15 @@ namespace VaskerietOMA.Controllers
 
         }
 
-        
+        [WebMethod]
+        public String GetTimeTableByDay(DateTime day)
+        {
+            var model = new TimeTableViewModel(day);
+            return Newtonsoft.Json.JsonConvert.SerializeObject(model);
+
+        }
+
+
 
         [WebMethod]
         public Boolean BookTime(WashTimeViewModel vm)
@@ -234,6 +248,32 @@ namespace VaskerietOMA.Controllers
         }
 
         [WebMethod]
+        public Boolean RemoveUser(User delUser)
+        {
+            ApplicationUser user = applicationDb.Users.Find(delUser.Id);
+            if (user == null)
+            {
+                return false;
+            }
+            user.UserName = String.Empty;
+            user.Name = String.Empty;
+            user.RoomNumber = 0;
+            user.Email = String.Empty;
+
+            db.Entry(user).State = EntityState.Modified;
+            try
+            {
+                db.SaveChangesAsync();
+                return true;
+
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        [WebMethod]
         public Boolean CancelBooking(WashTimeViewModel vm)
         {
             WashTime currentbooking = db.WashTimes.Find(vm.ID);
@@ -252,13 +292,8 @@ namespace VaskerietOMA.Controllers
             }
             catch (Exception)
             {
-
                 return false;
             }
         }
-
-      
     }
-
-   
 }

@@ -7,11 +7,62 @@
             ctrl.Weeknumber = 1;
             ctrl.TimeTable = null;
             ctrl.User = null;
+            ctrl.Today = new Date();
+            ctrl.selectedTab = (ctrl.Today.getDay() - 1);
+            ctrl.WeekMin = null;
+            ctrl.WeekMax = null;
+            ctrl.MinDate = getMonday(new Date());
+            ctrl.Maxdate = new Date(+new Date + 12096e5);
+
+            function getMonday(d) {
+                d = new Date(d);
+                var day = d.getDay(),
+                    diff = d.getDate() - day + (day == 0 ? -6 : 1); // adjust when day is sunday
+                return new Date(d.setDate(diff));
+            }
+
+            //ctrl.onSwipeLeft = function() {
+            //    if (ctrl.selectedTab > 0) {
+            //        ctrl.selectedTab = ctrl.selectedTab - 1;
+            //    }
+            //}
+
+            //ctrl.onSwipeRight = function () {
+            //    if (ctrl.selectedTab < 6) {
+            //        ctrl.selectedTab = ctrl.selectedTab + 1;
+            //    }
+            //}
+
 
             $scope.init = function(timetable) {
                 ctrl.TimeTable = timetable;
                 ctrl.Weeknumber = timetable.WeekNumber;
                 ctrl.User = timetable.User;
+                ctrl.WeekMin = "2017-W"+ ctrl.Weeknumber.toString() ;
+                ctrl.WeekMax = ctrl.Today.getFullYear().toString() + "-W" + (ctrl.Weeknumber + 1).toString();
+            }
+
+            ctrl.weekchange = function () {
+                ctrl.getNewTimeTable(ctrl.Today);
+               
+            }
+
+            ctrl.getNewTimeTable = function (day) {
+                if (day) {
+                    $http.post('/Home/GetTimeTableByDay',
+                        {
+                            day: day.toISOString()
+                        })
+                        .then(function(response, status, headers, config) {
+                            if (response.data) {
+                                ctrl.Weeknumber = response.data.WeekNumber;
+                                ctrl.TimeTable = response.data;
+                            }
+                        });
+                } else {
+                    alert("Du kan kun book 14 dage frem i tiden");
+                }
+                
             }
 
             ctrl.getUserViewModel = function() {
@@ -79,6 +130,7 @@ app.controller('BookingController', function ($uibModalInstance, $http, currentT
             .then(function (response, status, headers, config) {
                 if (response.data) {
                     ctrl.success = true;
+                    ctrl.Cancelsuccess  = false;
                     ctrl.currentTime.IsBooked = true;
                 }
             });
@@ -94,6 +146,7 @@ app.controller('BookingController', function ($uibModalInstance, $http, currentT
             $http.post('Home/CancelBooking', ctrl.currentTime)
             .then(function (response, status, headers, config) {
                 if (response.data) {
+                    ctrl.success = false;
                     ctrl.Cancelsuccess = true;
                     ctrl.currentTime.IsBooked = false;
                     ctrl.RoomNumber = 0;
