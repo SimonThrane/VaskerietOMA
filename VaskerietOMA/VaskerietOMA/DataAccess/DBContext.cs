@@ -11,6 +11,7 @@ namespace VaskerietOMA.DataAccess
     public class WashContext : DbContext
     {
         public DbSet<WashTime> WashTimes { get; set; }
+        public DbSet<BarBooking> BarBookings { get; set; }
 
         public WashContext()
             : base("DefaultConnection")

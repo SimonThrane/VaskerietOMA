@@ -10,6 +10,5 @@ C:\Users\Simon\Desktop\VaskerietOMA\VaskerietOMA\Model\obj\Release\Model.dll
 C:\Users\Simon\Desktop\VaskerietOMA\VaskerietOMA\Model\obj\Release\Model.pdb
 C:\Users\Simon\Dropbox\IHA\VaskerietOMA\VaskerietOMA\Model\bin\Release\Model.dll
 C:\Users\Simon\Dropbox\IHA\VaskerietOMA\VaskerietOMA\Model\bin\Release\Model.pdb
-C:\Users\Simon\Dropbox\IHA\VaskerietOMA\VaskerietOMA\Model\obj\Release\Model.csprojResolveAssemblyReference.cache
 C:\Users\Simon\Dropbox\IHA\VaskerietOMA\VaskerietOMA\Model\obj\Release\Model.dll
 C:\Users\Simon\Dropbox\IHA\VaskerietOMA\VaskerietOMA\Model\obj\Release\Model.pdb

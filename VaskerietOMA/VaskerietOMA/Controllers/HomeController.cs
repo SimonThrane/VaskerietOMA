@@ -4,6 +4,7 @@ using System.Data.Entity;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using Newtonsoft;
 using System.Net;
 using System.Net.Mail;
 using System.Web.Mvc;
@@ -70,21 +71,11 @@ namespace VaskerietOMA.Controllers
             
         }
 
-        public ActionResult Day()
+        public ActionResult Bar()
         {
-            List<WashTime> times = db.WashTimes.Where(x => x.Time.Day == DateTime.Today.Day).ToList();
-            List<WashTime> thisWeek = times.Where(time =>time.Time.Date == DateTime.Today).ToList();
-            if (thisWeek.Count < 16)
-            {
-                filler.FillDay(DateTime.Today, "Left");
-                filler.FillDay(DateTime.Today, "Right");
-            }
-
-            if (Request.IsAjaxRequest())
-            {
-                return (PartialView(thisWeek.ToList()));
-            }
-            return View("Day", thisWeek.ToList());
+            BarBookingVmList vm = new BarBookingVmList();
+            vm.BarBookings = db.BarBookings.ToList().Select(c=> new BarBookingVM(c)).ToList();
+            return View(vm);
         }
 
         public ActionResult About()
@@ -104,6 +95,46 @@ namespace VaskerietOMA.Controllers
                 return (PartialView("Contact"));
             }
             return View();
+        }
+
+        [HttpPost]
+        public string BookBar(BarBookingVM barBooking)
+        {
+            if (ModelState.IsValid)
+            {
+                if (barBooking.EndTime < barBooking.StartTime)
+                {
+                    barBooking.EndTime = barBooking.EndTime.AddDays(1);
+                }
+                BarBooking booking = barBooking.ToData();
+                db.BarBookings.Add(booking);
+                db.SaveChangesAsync();
+
+                //SmtpClient client = new SmtpClient
+                //{
+                //    Port = 587,
+                //    DeliveryMethod = SmtpDeliveryMethod.Network,
+                //    UseDefaultCredentials = false,
+                //    Credentials = new NetworkCredential("administrator@vaskerietoma.dk", "23HejMed5"),
+                //    Host = "smtp.unoeuro.com"
+                //};
+
+                //var body = "<p>Email From: {0} ({1})</p>" 
+                //        + "<p>Baren ønskes bookes d. {2} </p>" +
+                //        "<p>Besked:</p><p>{3}</p>";
+                //var message = new MailMessage();
+                //message.To.Add(new MailAddress("sthranehansen@gmail.com")); 
+                //message.Subject = "Booking ad baren til " + barBooking.Name;
+                //message.Body = string.Format(body, barBooking.Organizer, barBooking.Email, barBooking.StartTime, barBooking.Message);
+                //message.IsBodyHtml = true;
+                
+                //client.Send(message);
+
+
+                return Newtonsoft.Json.JsonConvert.SerializeObject(new BarBookingVM(booking));
+            }
+
+            return Newtonsoft.Json.JsonConvert.SerializeObject(barBooking);
         }
 
         [HttpPost]
@@ -225,22 +256,29 @@ namespace VaskerietOMA.Controllers
         [WebMethod]
         public Boolean BookTime(WashTimeViewModel vm)
         {
-            WashTime currentbooking = db.WashTimes.Find(vm.ID);
-            if (currentbooking == null)
+            if (vm.Time > DateTime.Now)
             {
-                return false;
-            }
+                WashTime currentbooking = db.WashTimes.Find(vm.ID);
+                if (currentbooking == null)
+                {
+                    return false;
+                }
 
-            currentbooking.IsBooked = true;
-            currentbooking.RoomNumber = vm.RoomNumber;
-            db.Entry(currentbooking).State = EntityState.Modified;
-            try
-            {
-                db.SaveChangesAsync();
-                return true;
+                currentbooking.IsBooked = true;
+                currentbooking.RoomNumber = vm.RoomNumber;
+                db.Entry(currentbooking).State = EntityState.Modified;
+                try
+                {
+                    db.SaveChangesAsync();
+                    return true;
 
+                }
+                catch (Exception)
+                {
+                    return false;
+                }
             }
-            catch (Exception)
+            else
             {
                 return false;
             }

@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Diagnostics;
 using System.Linq;
+using System.Net.Mail;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
@@ -10,6 +12,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
+using SendGrid.Helpers.Mail;
 using VaskerietOMA.Models;
 
 namespace VaskerietOMA
@@ -19,7 +22,21 @@ namespace VaskerietOMA
         public Task SendAsync(IdentityMessage message)
         {
             // Plug in your email service here to send an email.
-            return Task.FromResult(0);
+            return ConfigSendGridAsync(message);
+        }
+
+        private Task ConfigSendGridAsync(IdentityMessage message)
+        {
+            var myMessage = new SendGridMessage();
+            myMessage.AddTo(new EmailAddress(message.Destination));
+            myMessage.From = new EmailAddress("", "Vaskeriet OMA");
+            myMessage.Subject = message.Subject;
+            myMessage.PlainTextContent = message.Body;
+            myMessage.HtmlContent = message.Body;
+
+            var apikey = "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";
+            var transportWeb = new SendGrid.SendGridClient(apikey);
+            return transportWeb.SendEmailAsync(myMessage);
         }
     }
 

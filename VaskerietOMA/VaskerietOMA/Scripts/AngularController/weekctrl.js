@@ -2,7 +2,7 @@
 
 (function(module) {
     module.controller('WeekController',
-        function ($uibModal, $http, $scope) {
+        function($uibModal, $http, $scope) {
             var ctrl = this;
             ctrl.Weeknumber = 1;
             ctrl.TimeTable = null;
@@ -21,33 +21,19 @@
                 return new Date(d.setDate(diff));
             }
 
-            //ctrl.onSwipeLeft = function() {
-            //    if (ctrl.selectedTab > 0) {
-            //        ctrl.selectedTab = ctrl.selectedTab - 1;
-            //    }
-            //}
-
-            //ctrl.onSwipeRight = function () {
-            //    if (ctrl.selectedTab < 6) {
-            //        ctrl.selectedTab = ctrl.selectedTab + 1;
-            //    }
-            //}
-
-
             $scope.init = function(timetable) {
                 ctrl.TimeTable = timetable;
                 ctrl.Weeknumber = timetable.WeekNumber;
                 ctrl.User = timetable.User;
-                ctrl.WeekMin = "2017-W"+ ctrl.Weeknumber.toString() ;
+                ctrl.WeekMin = "2017-W" + ctrl.Weeknumber.toString();
                 ctrl.WeekMax = ctrl.Today.getFullYear().toString() + "-W" + (ctrl.Weeknumber + 1).toString();
             }
 
-            ctrl.weekchange = function () {
+            ctrl.weekchange = function() {
                 ctrl.getNewTimeTable(ctrl.Today);
-               
             }
 
-            ctrl.getNewTimeTable = function (day) {
+            ctrl.getNewTimeTable = function(day) {
                 if (day) {
                     $http.post('/Home/GetTimeTableByDay',
                         {
@@ -62,7 +48,7 @@
                 } else {
                     alert("Du kan kun book 14 dage frem i tiden");
                 }
-                
+
             }
 
             ctrl.getUserViewModel = function() {
@@ -75,30 +61,35 @@
             }
 
             ctrl.bookTime = function(washtime) {
-                var modalInstance = $uibModal.open({
-                    animation: true,
-                    templateUrl: 'Bookng.html',
-                    controller: 'BookingController',
-                    controllerAs: 'ctrl',
-                    resolve: {
-                        currentTime: function() {
-                            return washtime;
-                        },
-                        
-                    user: function() {
-                        return ctrl.User;
-                    }
+                if (Date.parse(washtime.Time) > ctrl.Today.getTime()) {
+                    var modalInstance = $uibModal.open({
+                        animation: true,
+                        templateUrl: 'Bookng.html',
+                        controller: 'BookingController',
+                        controllerAs: 'ctrl',
+                        resolve: {
+                            currentTime: function() {
+                                return washtime;
+                            },
 
-                    }
-                });
+                            user: function() {
+                                return ctrl.User;
+                            }
 
-                modalInstance.result.then(function(result) {
-
-                    },
-                    function() {
+                        }
                     });
-            };
+
+                    modalInstance.result.then(function(result) {
+
+                        },
+                        function() {
+                        });
+                } else {
+                    alert("Denne vasketid kan ikke længere bookes");
+                };
+            }
         });
+        
 })(angular.module('myApp'));
 
 

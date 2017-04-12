@@ -18,7 +18,4 @@ namespace MyModel.WashTime
 
         public int RoomNumber { get; set; }
     }
-
-
-
 }

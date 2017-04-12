@@ -1,0 +1,167 @@
+﻿@using Newtonsoft.Json.Converters
+@model VaskerietOMA.ViewModel.BarBookingVmList
+
+@{
+    ViewBag.Title = "Book baren!";
+}
+
+<html ng-app="myApp">
+<head>
+    <script src="/Scripts/AngularController/BarBookingController.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+</head>
+<body>
+<style>
+    .uib-day button, .uib-month button, .uib-year button {
+        height: 100%;
+    }
+
+    th,td {
+        border: none;
+    }
+
+    .modal-body {
+        min-height: 280px;
+    }
+
+    .partially button span{
+        background-color: limegreen!important;
+        border-radius: 50px;
+        padding: 10px;
+        color: black;
+
+    }
+
+    /*.modal-body label{
+    display: inline-block;
+    float: left;
+    clear: left;
+    width: 220px;
+    text-align: right;
+    margin-top: 6px;
+
+    }*/
+
+    .event_Info{
+        text-align: center;
+        line-height: 22pt;    
+        color: #685206; 
+        font-family: 'Lato', sans-serif;
+        margin: 0 0 24px; 
+        text-align: center;
+        border-radius: 35px;
+        background-color: #F6F6F6;
+        padding-bottom: 10px;
+    }
+
+    .event_Info h3 {
+        padding-top: 15px;
+         color: #67BCDB;
+          font-size: 38px;
+          font-family: 'Signika', sans-serif;
+          text-shadow: 2px 2px 3px rgba(255,255,255,0.1);
+
+    }
+
+    .modal-body {
+        color: #685206; 
+        font-family: 'Lato', sans-serif;
+    }
+
+   .modal-body input{
+       text-align: center;
+       width: 100%;
+       margin-bottom: 6px;
+    }
+
+   .modal-body textarea {
+        text-align: left;
+        resize: none; 
+        width: 100%;
+      
+    }
+
+   .btn {
+    border-width: 0px;
+    border-style: outset;
+    border-color: buttonface;
+    border-image: initial;
+   }
+
+   .Booking {
+       margin-left: 50%;
+       margin-right: 50%;
+       width: 180px;
+       height: 38px;
+       font-family: 'Lato', sans-serif;
+
+   }
+</style>
+    
+<div ng-controller="BarBookingController as ctrl"  ng-init="init(@Newtonsoft.Json.JsonConvert.SerializeObject(Model))" ng-cloak>
+        <div class="col-lg-8 col-md-8 col-sm-12">
+            <pre>Den valgte dag er: <em>{{ctrl.dt | date:'fullDate'}}</em></pre>
+            <div style="display:inline-block; min-height:290px; width: 100%;">
+                <div uib-datepicker ng-model="ctrl.dt" ng-change="ctrl.gotoDay(ctrl.dt)" class="well well-lg" datepicker-options="ctrl.options"></div>
+            </div>
+            <hr />
+            <button type="button" class="btn btn-sm btn-info Booking" ng-if="!ctrl.HasBookings && ctrl.Available" ng-click="ctrl.bookBar(ctrl.dt)">Book Baren</button>
+        </div>
+        <div class="col-sm-12 col-lg-4 col-md-4 event_Info" ng-if="ctrl.HasBookings">
+            <div >
+               <h3>{{ctrl.TodaysEvent[0].Name}}</h3>
+                Tidspunkt: {{ctrl.TodaysEvent[0].StartTime | date:'medium'}} <br/>
+                Arrangør: {{ctrl.TodaysEvent[0].Organizer}} <br/>
+                <span  ng-if="ctrl.TodaysEvent[0].IsPublic">Offentligt event</span>
+                <span ng-if="!ctrl.TodaysEvent[0].IsPublic">Privat event</span>
+
+           </div>
+        </div>
+
+
+                <!-- Modal -->
+    <script type="text/ng-template" id="Bookng.html">
+    <form name="myForm">
+
+        <div class="modal-header">
+            <h3 class="modal-title" id="modal-title">Book Baren</h3>
+        </div>
+        <div class="modal-body" id="modal-body">
+            <label>Arrangemet:</label>
+            <br />
+            <input type="text" placeholder="Arrangement" ng-model="ctrl.CurrentBooking.Name"> <br />
+            <label>Starttidspunkt: </label> <br />
+            <input type="time" placeholder="HH:mm:ss" ng-model="ctrl.CurrentBooking.StartTime"> <br />
+            <label>Sluttidspunkt: </label>  <br />
+             <input type="time" placeholder="HH:mm:ss" ng-model="ctrl.CurrentBooking.EndTime "> <br />
+            <label>Email: </label> <br />
+             <input type="email" ng-model="ctrl.CurrentBooking.Email"> <br />
+            <label>Arranggør: </label> <br />
+             <input type="text" ng-model="ctrl.CurrentBooking.Organizer "> <br />
+            <label>Kommentar: </label>
+            <br />
+             <textarea cols="23" rows="4" ng-model="ctrl.CurrentBooking.Message"/> <br />
+            <label>
+                <input type="radio" name="IsPublic" ng-model="ctrl.CurrentBooking.IsPublic" value="true" />
+                Offentlig
+            </label>
+            <label>
+            <input type="radio" name="IsPublic" ng-model="ctrl.CurrentBooking.IsPublic" value="false" />
+                Privat
+            </label>
+
+                <div ng-if="ctrl.success">
+                    <br />
+                    Tillykke bookingen er gennemført.
+                </div>
+    </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" type="button" ng-click="ctrl.ok()">Book tid</button>
+            <button class="btn btn-warning" type="button" ng-click="ctrl.cancel()">Close</button>
+        </div>
+    </form>
+    </script>
+
+</div>
+</body>
+</html>

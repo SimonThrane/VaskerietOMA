@@ -10,3 +10,4 @@ C:\Users\Simon\Dropbox\IHA\VaskerietOMA\VaskerietOMA\Model\bin\Debug\Model.dll
 C:\Users\Simon\Dropbox\IHA\VaskerietOMA\VaskerietOMA\Model\bin\Debug\Model.pdb
 C:\Users\Simon\Dropbox\IHA\VaskerietOMA\VaskerietOMA\Model\obj\Debug\Model.dll
 C:\Users\Simon\Dropbox\IHA\VaskerietOMA\VaskerietOMA\Model\obj\Debug\Model.pdb
+C:\Users\Simon\Dropbox\IHA\VaskerietOMA\VaskerietOMA\Model\obj\Debug\Model.csprojResolveAssemblyReference.cache

@@ -280,3 +280,8 @@ C:\Users\Simon\Dropbox\IHA\VaskerietOMA\VaskerietOMA\VaskerietOMA\obj\Debug\Vask
 C:\Users\Simon\Dropbox\IHA\VaskerietOMA\VaskerietOMA\VaskerietOMA\obj\Debug\VaskerietOMA.csproj.GenerateResource.Cache
 C:\Users\Simon\Dropbox\IHA\VaskerietOMA\VaskerietOMA\VaskerietOMA\obj\Debug\VaskerietOMA.dll
 C:\Users\Simon\Dropbox\IHA\VaskerietOMA\VaskerietOMA\VaskerietOMA\obj\Debug\VaskerietOMA.pdb
+C:\Users\Simon\Dropbox\IHA\VaskerietOMA\VaskerietOMA\VaskerietOMA\obj\Debug\VaskerietOMA.Migrations.AddedBarBooking.resources
+C:\Users\Simon\Dropbox\IHA\VaskerietOMA\VaskerietOMA\VaskerietOMA\obj\Debug\VaskerietOMA.Migrations.IsPublicAddedToBarBooking.resources
+C:\Users\Simon\Dropbox\IHA\VaskerietOMA\VaskerietOMA\VaskerietOMA\bin\SendGrid.dll
+C:\Users\Simon\Dropbox\IHA\VaskerietOMA\VaskerietOMA\VaskerietOMA\bin\SendGrid.pdb
+C:\Users\Simon\Dropbox\IHA\VaskerietOMA\VaskerietOMA\VaskerietOMA\bin\SendGrid.xml

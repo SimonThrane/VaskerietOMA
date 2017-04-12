@@ -1,0 +1,74 @@
+﻿@using Newtonsoft.Json.Converters
+@model VaskerietOMA.Models.UserAdminStrationViewModel
+    
+<div ng-app="myApp" ng-controller="UserAdminController as ctrl" ng-init="init(@Newtonsoft.Json.JsonConvert.SerializeObject(Model))" ng-cloak>
+    <h2>Brugere registeret i systemet</h2>
+    
+    <table class="user-list"> 
+        <tr>
+            <th>Navn</th><th>Værelsesnr</th><th>Email</th><th>Actions</th>
+        </tr>
+        <tr ng-repeat="x in ctrl.UserList.Users">
+            <td>
+                {{x.Name}}            
+            </td>
+            <td>
+                {{x.RoomNumber}}
+            </td>
+            <td>
+                {{x.Email}}
+            </td>
+            <td>
+                <span class="glyphicon glyphicon-adjust"></span>
+                <span class="glyphicon glyphicon-trash" ng-click="ctrl.RemoveUser(x)"></span>
+                <span class="glyphicon glyphicon-envelope" ng-click="ctrl.SendEmail(x)"></span>
+
+            </td>
+        </tr>
+    </table>
+    
+
+
+</div>
+
+<script>
+    app = angular.module('myApp', ['ngAnimate', 'ngSanitize', 'ui.bootstrap']);
+
+    (function (module) {
+        module.controller('UserAdminController',
+            function ($http, $scope) {
+                var ctrl = this;
+                ctrl.UserList = null;
+                
+                $scope.init = function (users) {
+                    ctrl.UserList = users;
+                    
+                }
+
+                ctrl.SendEmail = function(user) {
+
+                };
+
+                ctrl.RemoveUser = function (user) {
+                    if (confirm("Er du sikker på, at brugeren skal slettes?")) {
+                        $http.post('/Manage/RemoveUser', user)
+                            .then(function (response, status, headers, config) {
+                            if (response.data) {
+                                var index = ctrl.UserList.Users.indexOf(user);
+                                ctrl.UserList.User.splice(index, 0);
+                            }
+                        });
+                        
+                    }
+                }
+
+                
+            });
+    })(angular.module('myApp'));
+
+</script>
+    
+
+    
+
+
