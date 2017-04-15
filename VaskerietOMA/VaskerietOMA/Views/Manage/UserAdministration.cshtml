@@ -3,12 +3,23 @@
     
 <div ng-app="myApp" ng-controller="UserAdminController as ctrl" ng-init="init(@Newtonsoft.Json.JsonConvert.SerializeObject(Model))" ng-cloak>
     <h2>Brugere registeret i systemet</h2>
-    
     <table class="user-list"> 
         <tr>
-            <th>Navn</th><th>Værelsesnr</th><th>Email</th><th>Actions</th>
+            <th class="clickable" ng-click="ctrl.sort('Name')">
+                Navn
+                <span class="glyphicon sort-icon" ng-class="{'glyphicon-chevron-up':ctrl.reverse,'glyphicon-chevron-down':!ctrl.reverse}" ng-show="ctrl.SortOrder=='Name'"></span>
+            </th>
+            <th class="clickable" ng-click="ctrl.sort('RoomNumber')">
+                Værelsesnr
+                <span class="glyphicon sort-icon" ng-class="{'glyphicon-chevron-up':ctrl.reverse,'glyphicon-chevron-down':!ctrl.reverse}" ng-show="ctrl.SortOrder=='RoomNumber'"></span>
+            </th>
+            <th class="clickable" ng-click="ctrl.sort('Email')">
+                Email
+                <span class="glyphicon sort-icon" ng-class="{'glyphicon-chevron-up':ctrl.reverse,'glyphicon-chevron-down':!ctrl.reverse}" ng-show="ctrl.SortOrder=='Email'"></span>
+            </th>
+            <th>Aktions</th>
         </tr>
-        <tr ng-repeat="x in ctrl.UserList.Users">
+        <tr ng-repeat="x in ctrl.UserList.Users | orderBy:ctrl.SortOrder:ctrl.reverse">
             <td>
                 {{x.Name}}            
             </td>
@@ -19,15 +30,31 @@
                 {{x.Email}}
             </td>
             <td>
-                <span class="glyphicon glyphicon-adjust"></span>
-                <span class="glyphicon glyphicon-trash" ng-click="ctrl.RemoveUser(x)"></span>
-                <span class="glyphicon glyphicon-envelope" ng-click="ctrl.SendEmail(x)"></span>
-
+                <span class="glyphicon glyphicon-adjust clickable"></span>
+                <span class="glyphicon glyphicon-trash clickable" ng-click="ctrl.RemoveUser(x)"></span>
+                <span class="glyphicon glyphicon-envelope clickable" ng-click="ctrl.SendEmail(x)"></span>
             </td>
         </tr>
     </table>
     
-
+    <script type="text/ng-template" id="SendMail.html">
+        <form name="myForm">
+            <div class="modal-header">
+                <h3 class="modal-title" id="modal-title">Send besked til bruge</h3>
+            </div>
+            <div class="modal-body" id="modal-body">
+                <label>Besked til {{ctrl.User.Name}}</label>
+                <br />
+                <label>Besked: </label> <br />
+                <textarea cols="30" rows="8" ng-model="ctrl.User.Message" /> <br />
+                
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" type="button" ng-click="ctrl.ok()">Send Mail</button>
+                <button class="btn btn-warning" type="button" ng-click="ctrl.cancel()">Close</button>
+            </div>
+        </form>
+    </script>
 
 </div>
 
@@ -36,17 +63,35 @@
 
     (function (module) {
         module.controller('UserAdminController',
-            function ($http, $scope) {
+            function ($http, $scope, $uibModal) {
                 var ctrl = this;
                 ctrl.UserList = null;
+
+                ctrl.reverse = true;
+                ctrl.SortOrder = "Name";
                 
                 $scope.init = function (users) {
                     ctrl.UserList = users;
-                    
+                }
+
+                ctrl.sort = function (type) {
+                    ctrl.reverse = !ctrl.reverse;
+                    ctrl.SortOrder = type;
                 }
 
                 ctrl.SendEmail = function(user) {
-
+                    var modalInstance = $uibModal.open({
+                        animation: true,
+                        templateUrl: 'SendMail.html',
+                        controller: 'SendMailController',
+                        controllerAs: 'ctrl',
+                        resolve: {
+                            user: function() {
+                                return user;
+                            }
+                        }
+                    });
+                    modalInstance.result.then(function() {});
                 };
 
                 ctrl.RemoveUser = function (user) {
@@ -65,6 +110,26 @@
                 
             });
     })(angular.module('myApp'));
+
+    app.controller('SendMailController', function ($uibModalInstance, $http, user) {
+        var ctrl = this;
+        ctrl.User = user;
+
+        ctrl.ok = function () {
+            $http.post('/Manage/SendUserMail', ctrl.User)
+                .then(function (response, status, headers, config) {
+                    if (response.data) {
+                        $uibModalInstance.close(response.data);
+                    }
+                });
+
+        };
+
+        ctrl.cancel = function () {
+            $uibModalInstance.dismiss('cancel');
+        };
+
+    });
 
 </script>
     

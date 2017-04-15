@@ -10,6 +10,10 @@ h2 { color: #7c795d; font-family: 'Source Sans Pro', sans-serif; font-size: 28px
 
 p { color: #4c4a37; font-family: 'Source Sans Pro', sans-serif; font-size: 18px; line-height: 32px; margin: 0 0 24px; }
 
+     .clickable {
+         cursor: pointer;
+     }
+
 table {
     outline: none;
     width: 100%;
@@ -94,6 +98,8 @@ table {
          background-color: orange;
          cursor: pointer;
      }
+
+
 
     .booked {
         color: white;

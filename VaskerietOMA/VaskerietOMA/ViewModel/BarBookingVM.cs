@@ -12,6 +12,7 @@ namespace VaskerietOMA.ViewModel
         public bool IsPaid { get; set; }
         public string Message { get; set; }
         public string Email { get; set; }
+        public BarBookingStatus Status { get; set; }
         public string Name { get; set; }
         public bool IsPublic { get; set; }
 
@@ -28,19 +29,33 @@ namespace VaskerietOMA.ViewModel
             Message = barBooking.Message;
             Name = barBooking.Name;
             IsPublic = barBooking.IsPublic;
+            Email = barBooking.Email;
+            Status = (BarBookingStatus) barBooking.Status;
+
 
         }
 
         public BarBooking ToData()
         {
-            BarBooking b1 = new BarBooking();
-            b1.Name = Name;
-            b1.EndTime = EndTime;
-            b1.Message = Message;
-            b1.Organizer = Organizer;
-            b1.StartTime = StartTime;
-            b1.IsPublic = IsPublic;
+            BarBooking b1 = new BarBooking
+            {
+                Name = Name,
+                EndTime = EndTime,
+                Message = Message,
+                Organizer = Organizer,
+                StartTime = StartTime,
+                IsPublic = IsPublic,
+                Email = Email,
+                Status = (int) Status
+            };
             return b1;
         }
     }
+
+    public enum BarBookingStatus
+    {
+        NotBooked,
+        BookedWaiting,
+        BookingApproved
+    };
 }

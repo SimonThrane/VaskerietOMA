@@ -1,7 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data.Entity;
+using System.Globalization;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -11,6 +15,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using VaskerietOMA.Models;
+using VaskerietOMA.ViewModel;
 
 namespace VaskerietOMA.Controllers
 {
@@ -54,6 +59,26 @@ namespace VaskerietOMA.Controllers
             }
         }
 
+        [HttpPost]
+        public void SendUserMail(MailViewModel mail)
+        {
+            SmtpClient client = new SmtpClient
+            {
+                Port = 587,
+                DeliveryMethod = SmtpDeliveryMethod.Network,
+                UseDefaultCredentials = false,
+                Credentials = new NetworkCredential(ConfigurationManager.AppSettings["sendMailUser"], ConfigurationManager.AppSettings["sendMailPassword"]),
+                Host = "smtp.unoeuro.com"
+            };
+
+            var message = new MailMessage {From = (new MailAddress("administrator@vaskerietoma.dk", "Vaskeriet OMA"))};
+            message.To.Add(new MailAddress(mail.Email));
+            message.Subject = "Besked fra Administratoren";
+            message.Body = mail.Message;
+            message.IsBodyHtml = true;
+
+            client.Send(message);
+        }
 
         public ActionResult UserAdministration()
         {

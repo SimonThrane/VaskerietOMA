@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data.Entity;
 using System.Diagnostics;
 using System.Linq;
+using System.Net;
 using System.Net.Mail;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -25,18 +27,25 @@ namespace VaskerietOMA
             return ConfigSendGridAsync(message);
         }
 
-        private Task ConfigSendGridAsync(IdentityMessage message)
+        private Task ConfigSendGridAsync(IdentityMessage messageContent)
         {
-            var myMessage = new SendGridMessage();
-            myMessage.AddTo(new EmailAddress(message.Destination));
-            myMessage.From = new EmailAddress("", "Vaskeriet OMA");
-            myMessage.Subject = message.Subject;
-            myMessage.PlainTextContent = message.Body;
-            myMessage.HtmlContent = message.Body;
+            SmtpClient client = new SmtpClient
+            {
+                Port = 587,
+                DeliveryMethod = SmtpDeliveryMethod.Network,
+                UseDefaultCredentials = false,
+                Credentials = new NetworkCredential(ConfigurationManager.AppSettings["sendMailUser"], ConfigurationManager.AppSettings["sendMailPassword"]),
+                Host = "smtp.unoeuro.com"
+            };
 
-            var apikey = "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";
-            var transportWeb = new SendGrid.SendGridClient(apikey);
-            return transportWeb.SendEmailAsync(myMessage);
+            var message = new MailMessage();
+            message.From = (new MailAddress("administrator@vaskerietoma.dk", "Vaskeriet OMA")); //replace with valid value
+            message.To.Add(new MailAddress(messageContent.Destination));
+            message.Subject = messageContent.Subject;
+            message.Body = messageContent.Body;
+            message.IsBodyHtml = true;
+
+            return client.SendMailAsync(message);
         }
     }
 

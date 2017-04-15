@@ -79,11 +79,19 @@ angular.module('myApp').controller('BarBookingController', function ($scope, $ui
         if (mode === 'day') {
         for (var i = 0; i < ctrl.Bookings.length; i++) {
             var currentDay = ctrl.Bookings[i].StartTime.substr(0, 10);
+            var status = ctrl.Bookings[i].Status;
             if (mode === 'day') {
                 if (date.toISOString().substr(0,10) === currentDay) 
                 {
+                    if (status === 1) {
                         return "partially";
+                    } else if (status === 2) {
+                        return "approved";
+                    } else {
+                        return "";
                     }
+                }
+
                 }
             }
             return "";
@@ -99,6 +107,7 @@ angular.module('myApp').controller('BarBookingController', function ($scope, $ui
         ctrl.CurrentBooking.IsPublic = true;
 
         ctrl.ok = function () {
+            ctrl.CurrentBooking.Status = 1;
             $http.post('/Home/BookBar', ctrl.CurrentBooking)
                 .then(function (response, status, headers, config) {
                     if (response.data) {

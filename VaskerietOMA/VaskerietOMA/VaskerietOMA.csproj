@@ -258,6 +258,10 @@
     <Compile Include="Migrations\201704121404119_IsPublicAddedToBarBooking.Designer.cs">
       <DependentUpon>201704121404119_IsPublicAddedToBarBooking.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201704150637015_EmailAdded.cs" />
+    <Compile Include="Migrations\201704150637015_EmailAdded.Designer.cs">
+      <DependentUpon>201704150637015_EmailAdded.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -268,6 +272,7 @@
     <Compile Include="ViewModel\BarBookingVmList.cs" />
     <Compile Include="ViewModel\EmailFormModel.cs" />
     <Compile Include="ViewModel\Machine.cs" />
+    <Compile Include="ViewModel\MailViewModel.cs" />
     <Compile Include="ViewModel\TimeTableViewModel.cs" />
     <Compile Include="ViewModel\TopListViewModel.cs" />
     <Compile Include="ViewModel\WashDayViewModel.cs" />
@@ -381,6 +386,7 @@
     <Content Include="Views\Home\_Booking.cshtml" />
     <Content Include="Views\Home\Bar.cshtml" />
     <Content Include="Views\Manage\UserAdministration.cshtml" />
+    <Content Include="Views\Home\BarBookingAdministration.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -411,6 +417,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201704121404119_IsPublicAddedToBarBooking.resx">
       <DependentUpon>201704121404119_IsPublicAddedToBarBooking.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704150637015_EmailAdded.resx">
+      <DependentUpon>201704150637015_EmailAdded.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

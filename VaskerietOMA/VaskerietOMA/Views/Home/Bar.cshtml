@@ -24,23 +24,19 @@
         min-height: 280px;
     }
 
-    .partially button span{
+    .approved button span{
         background-color: limegreen!important;
         border-radius: 50px;
         padding: 10px;
         color: black;
-
     }
 
-    /*.modal-body label{
-    display: inline-block;
-    float: left;
-    clear: left;
-    width: 220px;
-    text-align: right;
-    margin-top: 6px;
-
-    }*/
+    .partially button span{
+        background-color: yellow!important;
+        border-radius: 50px;
+        padding: 10px;
+        color: black;
+    }
 
     .event_Info{
         text-align: center;
@@ -150,10 +146,6 @@
                 Privat
             </label>
 
-                <div ng-if="ctrl.success">
-                    <br />
-                    Tillykke bookingen er gennemført.
-                </div>
     </div>
         <div class="modal-footer">
             <button class="btn btn-primary" type="button" ng-click="ctrl.ok()">Book tid</button>

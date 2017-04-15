@@ -60,8 +60,9 @@
                     });
             }
 
-            ctrl.bookTime = function(washtime) {
-                if (Date.parse(washtime.Time) > ctrl.Today.getTime()) {
+            ctrl.bookTime = function (washtime) {
+                var var1 = Date.parse(washtime.Time);
+                if (Date.parse(washtime.Time) > ctrl.Today) {
                     var modalInstance = $uibModal.open({
                         animation: true,
                         templateUrl: 'Bookng.html',

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data.Entity;
 using System.Globalization;
 using System.IO;
@@ -59,6 +60,11 @@ namespace VaskerietOMA.Controllers
 
             TimeTableViewModel weekTableViewModel = new TimeTableViewModel(thisWeek) {User = GetBookingViewModel()};
 
+            if (Request.IsAjaxRequest())
+            {
+                return (PartialView("Index", weekTableViewModel));
+            }
+
             return View(weekTableViewModel);
         }
 
@@ -73,14 +79,24 @@ namespace VaskerietOMA.Controllers
 
         public ActionResult Bar()
         {
-            BarBookingVmList vm = new BarBookingVmList();
-            vm.BarBookings = db.BarBookings.ToList().Select(c=> new BarBookingVM(c)).ToList();
+            BarBookingVmList vm = new BarBookingVmList
+            {
+                BarBookings = db.BarBookings.ToList().Select(c => new BarBookingVM(c)).ToList()
+            };
+            return View(vm);
+        }
+
+        public ActionResult BarBookingAdministration()
+        {
+            BarBookingVmList vm = new BarBookingVmList
+            {
+                BarBookings = db.BarBookings.ToList().Select(c => new BarBookingVM(c)).ToList()
+            };
             return View(vm);
         }
 
         public ActionResult About()
         {
-            ViewBag.Message = "Your application description page.";
             if (Request.IsAjaxRequest())
             {
                 return (PartialView("About"));
@@ -98,6 +114,96 @@ namespace VaskerietOMA.Controllers
         }
 
         [HttpPost]
+        public bool EventApproved(BarBookingVM barBooking)
+        {
+            if (ModelState.IsValid)
+            {
+                var booking = db.BarBookings.Find(barBooking.Id);
+                if (booking == null)
+                {
+                    return false;
+                }
+                booking.Status = (int) BarBookingStatus.BookingApproved;
+                db.Entry(booking).State = EntityState.Modified;
+                try
+                {
+                    db.SaveChanges();
+                }
+                catch (Exception)
+                {
+                    return false;
+                }
+                //SmtpClient client = new SmtpClient
+                //{
+                //    Port = 587,
+                //    DeliveryMethod = SmtpDeliveryMethod.Network,
+                //    UseDefaultCredentials = false,
+                //    Credentials = new NetworkCredential(ConfigurationManager.AppSettings["sendMailUser"], ConfigurationManager.AppSettings["sendMailPassword"]),
+                //    Host = "smtp.unoeuro.com"
+                //};
+
+                //var body = "<p>Din betaling til booking af baren: d. {0} er registeret </p>";
+                //var message = new MailMessage();
+                //message.From = (new MailAddress("administrator@vaskerietoma.dk", "Vaskeriet OMA")); //replace with valid value
+                //message.To.Add(new MailAddress(booking.Email));
+                //message.Subject = "Booking ad baren til " + barBooking.Name;
+                //message.Body = string.Format(body, barBooking.StartTime.ToString(CultureInfo.CurrentCulture));
+                //message.IsBodyHtml = true;
+
+                //client.Send(message);
+
+                return true;
+            }
+            return false;
+        }
+
+
+        [HttpPost]
+        public bool EventPaid(BarBookingVM barBooking)
+        {
+            if (ModelState.IsValid)
+            {
+                var booking = db.BarBookings.Find(barBooking.Id);
+                if (booking == null)
+                {
+                    return false;
+                }
+                booking.IsPaid = true;
+                db.Entry(booking).State = EntityState.Modified;
+                try
+                {
+                    db.SaveChanges();
+                }
+                catch (Exception)
+                {
+                    return false;
+                }
+                SmtpClient client = new SmtpClient
+                {
+                    Port = 587,
+                    DeliveryMethod = SmtpDeliveryMethod.Network,
+                    UseDefaultCredentials = false,
+                    Credentials = new NetworkCredential(ConfigurationManager.AppSettings["sendMailUser"], ConfigurationManager.AppSettings["sendMailPassword"]),
+                    Host = "smtp.unoeuro.com"
+                };
+
+                var body = "<p>Din betaling til booking af baren: d. {0} er registeret </p>";
+                var message = new MailMessage();
+                message.From = (new MailAddress("administrator@vaskerietoma.dk", "Vaskeriet OMA")); //replace with valid value
+                message.To.Add(new MailAddress(booking.Email));
+                message.Subject = "Booking ad baren til " + barBooking.Name;
+                message.Body = string.Format(body, barBooking.StartTime.ToString(CultureInfo.CurrentCulture));
+                message.IsBodyHtml = true;
+
+                client.Send(message);
+
+                return true;
+            }
+            return false;
+        }
+
+
+        [HttpPost]
         public string BookBar(BarBookingVM barBooking)
         {
             if (ModelState.IsValid)
@@ -110,25 +216,26 @@ namespace VaskerietOMA.Controllers
                 db.BarBookings.Add(booking);
                 db.SaveChangesAsync();
 
-                //SmtpClient client = new SmtpClient
-                //{
-                //    Port = 587,
-                //    DeliveryMethod = SmtpDeliveryMethod.Network,
-                //    UseDefaultCredentials = false,
-                //    Credentials = new NetworkCredential("administrator@vaskerietoma.dk", "23HejMed5"),
-                //    Host = "smtp.unoeuro.com"
-                //};
+                SmtpClient client = new SmtpClient
+                {
+                    Port = 587,
+                    DeliveryMethod = SmtpDeliveryMethod.Network,
+                    UseDefaultCredentials = false,
+                    Credentials = new NetworkCredential(ConfigurationManager.AppSettings["sendMailUser"], ConfigurationManager.AppSettings["sendMailPassword"]),
+                    Host = "smtp.unoeuro.com"
+                };
 
-                //var body = "<p>Email From: {0} ({1})</p>" 
-                //        + "<p>Baren ønskes bookes d. {2} </p>" +
-                //        "<p>Besked:</p><p>{3}</p>";
-                //var message = new MailMessage();
-                //message.To.Add(new MailAddress("sthranehansen@gmail.com")); 
-                //message.Subject = "Booking ad baren til " + barBooking.Name;
-                //message.Body = string.Format(body, barBooking.Organizer, barBooking.Email, barBooking.StartTime, barBooking.Message);
-                //message.IsBodyHtml = true;
-                
-                //client.Send(message);
+                var body = "<p>Email From: {0} ({1})</p>"
+                        + "<p>Baren ønskes bookes d. {2} - {3} </p>" +
+                        "<p>Besked:</p><p>{4}</p>";
+                var message = new MailMessage();
+                message.From = (new MailAddress("administrator@vaskerietoma.dk", "Vaskeriet OMA")); //replace with valid value
+                message.To.Add(new MailAddress("sthranehansen@gmail.com"));
+                message.Subject = "Booking ad baren til " + barBooking.Name;
+                message.Body = string.Format(body, barBooking.Organizer, barBooking.Email, barBooking.StartTime.ToString(CultureInfo.CurrentCulture), barBooking.EndTime.ToString(CultureInfo.CurrentCulture), barBooking.Message);
+                message.IsBodyHtml = true;
+
+                client.Send(message);
 
 
                 return Newtonsoft.Json.JsonConvert.SerializeObject(new BarBookingVM(booking));
@@ -148,7 +255,7 @@ namespace VaskerietOMA.Controllers
                     Port = 587,
                     DeliveryMethod = SmtpDeliveryMethod.Network,
                     UseDefaultCredentials = false,
-                    Credentials = new NetworkCredential("administrator@vaskerietoma.dk", "23HejMed5"),
+                    Credentials = new NetworkCredential(ConfigurationManager.AppSettings["sendMailUser"], ConfigurationManager.AppSettings["sendMailPassword"]),
                     Host = "smtp.unoeuro.com"
                 };
 
@@ -180,7 +287,7 @@ namespace VaskerietOMA.Controllers
                     Port = 587,
                     DeliveryMethod = SmtpDeliveryMethod.Network,
                     UseDefaultCredentials = false,
-                    Credentials = new NetworkCredential("administrator@vaskerietoma.dk", "23HejMed5"),
+                    Credentials = new NetworkCredential(ConfigurationManager.AppSettings["sendMailUser"], ConfigurationManager.AppSettings["sendMailPassword"]),
                     Host = "smtp.unoeuro.com"
                 };
 
@@ -251,8 +358,6 @@ namespace VaskerietOMA.Controllers
 
         }
 
-
-
         [WebMethod]
         public Boolean BookTime(WashTimeViewModel vm)
         {
@@ -302,6 +407,27 @@ namespace VaskerietOMA.Controllers
             try
             {
                 db.SaveChangesAsync();
+                return true;
+
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        [WebMethod]
+        public Boolean CancelEvent(BarBookingVM vm)
+        {
+            BarBooking currentbooking = db.BarBookings.Find(vm.Id);
+            if (currentbooking == null)
+            {
+                return false;
+            }
+            db.BarBookings.Remove(currentbooking);
+            try
+            {
+                db.SaveChanges();
                 return true;
 
             }

@@ -285,3 +285,4 @@ C:\Users\Simon\Dropbox\IHA\VaskerietOMA\VaskerietOMA\VaskerietOMA\obj\Debug\Vask
 C:\Users\Simon\Dropbox\IHA\VaskerietOMA\VaskerietOMA\VaskerietOMA\bin\SendGrid.dll
 C:\Users\Simon\Dropbox\IHA\VaskerietOMA\VaskerietOMA\VaskerietOMA\bin\SendGrid.pdb
 C:\Users\Simon\Dropbox\IHA\VaskerietOMA\VaskerietOMA\VaskerietOMA\bin\SendGrid.xml
+C:\Users\Simon\Dropbox\IHA\VaskerietOMA\VaskerietOMA\VaskerietOMA\obj\Debug\VaskerietOMA.Migrations.EmailAdded.resources
